@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Products.Application.DependencyInjection;
 using Products.DependencyInjections;
 using Products.Persistance.Context;
 
@@ -8,6 +9,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddPersistance(builder.Configuration);
+builder.Services.AddApplication();
 
 var app = builder.Build();
 
