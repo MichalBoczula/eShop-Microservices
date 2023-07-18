@@ -3,9 +3,9 @@ using Products.Domain.Entities;
 
 namespace Products.Persistance.Seed
 {
-    public static class ProductsSeed
+    internal static class ProductsSeed
     {
-        public static void SeedProducts(this ModelBuilder modelBuilder)
+        internal static void SeedProducts(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Product>().HasData(
                 new Product

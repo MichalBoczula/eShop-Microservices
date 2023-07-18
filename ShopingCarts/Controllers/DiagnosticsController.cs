@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Products.Controllers
+namespace ShopingCarts.Controllers
 {
     [ApiController]
     [Route("[controller]")]
@@ -16,13 +16,13 @@ namespace Products.Controllers
         [HttpGet("HealthCheck")]
         public ActionResult<string> GetHealthCheck()
         {
-            return "Products works Brooo :)";
+            return "ShoppingCarts works Brooo :)";
         }
 
         [HttpGet("DatabaseName")]
         public ActionResult<string> GetDatabaseName()
         {
-            return "Database=eShop.Products;";
+            return "Database=eShop.ShoppingCarts;";
         }
     }
 }

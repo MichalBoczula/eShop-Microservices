@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace Products.Application.DependencyInjection
+namespace ShopingCarts.DependencyInjections
 {
     internal static class ApplicationDI
     {

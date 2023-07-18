@@ -5,7 +5,7 @@ namespace Products.Application.Contracts.Persistance
 {
     internal interface IProductsContext
     {
-        public DbSet<Product> Products { get; set; }
+        DbSet<Product> Products { get; set; }
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }
