@@ -9,10 +9,10 @@ using ShopingCarts.Persistance.Context;
 
 #nullable disable
 
-namespace ShopingCarts.Persistance.Migrations
+namespace ShopingCarts.Migrations
 {
     [DbContext(typeof(ShoppingCartContext))]
-    [Migration("20230718105644_Initial")]
+    [Migration("20230720103042_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -46,9 +46,10 @@ namespace ShopingCarts.Persistance.Migrations
                     b.HasIndex("IntegrationId")
                         .IsUnique();
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
-                    b.ToTable("ShoppingCart");
+                    b.ToTable("ShoppingCarts");
                 });
 
             modelBuilder.Entity("ShopingCarts.Domain.Entities.ShoppingCartProduct", b =>
@@ -75,7 +76,7 @@ namespace ShopingCarts.Persistance.Migrations
 
                     b.HasIndex("ShoppingCartId");
 
-                    b.ToTable("ShoppingCartProduct");
+                    b.ToTable("ShoppingCartProducts");
                 });
 
             modelBuilder.Entity("ShopingCarts.Domain.Entities.User", b =>
@@ -89,19 +90,22 @@ namespace ShopingCarts.Persistance.Migrations
                     b.Property<Guid>("IntegrationId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("ShoppingCartId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("IntegrationId")
                         .IsUnique();
 
-                    b.ToTable("User");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("ShopingCarts.Domain.Entities.ShoppingCart", b =>
                 {
                     b.HasOne("ShopingCarts.Domain.Entities.User", "UserRef")
-                        .WithMany("ShoppingCarts")
-                        .HasForeignKey("UserId")
+                        .WithOne("ShoppingCartRef")
+                        .HasForeignKey("ShopingCarts.Domain.Entities.ShoppingCart", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -126,7 +130,8 @@ namespace ShopingCarts.Persistance.Migrations
 
             modelBuilder.Entity("ShopingCarts.Domain.Entities.User", b =>
                 {
-                    b.Navigation("ShoppingCarts");
+                    b.Navigation("ShoppingCartRef")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

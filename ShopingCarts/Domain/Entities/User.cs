@@ -4,6 +4,7 @@
     {
         public int Id { get; set; }
         public Guid IntegrationId { get; set; }
-        public List<ShoppingCart> ShoppingCarts { get; set; }
+        public int ShoppingCartId { get; set; }
+        public ShoppingCart ShoppingCartRef { get; set; }
     }
 }

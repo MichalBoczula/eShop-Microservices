@@ -10,8 +10,8 @@ namespace ShopingCarts.Persistance.Configuration
         {
             builder.HasKey(x => x.Id);
             builder.HasOne(x => x.UserRef)
-                .WithMany(x => x.ShoppingCarts)
-                .HasForeignKey(x => x.UserId);
+                .WithOne(x => x.ShoppingCartRef)
+                .HasForeignKey<ShoppingCart>(x => x.UserId);
             builder.Property(x => x.UserId).IsRequired();
             builder.Property(x => x.Total).IsRequired();
             builder.Property(x => x.IntegrationId).IsRequired();

@@ -30,5 +30,4 @@ namespace ShopingCarts.Persistance.Context
             return base.SaveChangesAsync(cancellationToken);
         }
     }
-
 }
