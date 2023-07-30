@@ -1,4 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using Orders.DependencyInjection;
+using Orders.Persistance.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,12 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddPersistance(builder.Configuration);
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<OrderContext>();
+    db.Database.Migrate();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

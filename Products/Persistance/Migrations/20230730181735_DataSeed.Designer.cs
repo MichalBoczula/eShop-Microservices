@@ -12,7 +12,7 @@ using Products.Persistance.Context;
 namespace Products.Persistance.Migrations
 {
     [DbContext(typeof(ProductsContext))]
-    [Migration("20230715102209_DataSeed")]
+    [Migration("20230730181735_DataSeed")]
     partial class DataSeed
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

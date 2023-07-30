@@ -9,11 +9,11 @@ using ShopingCarts.Persistance.Context;
 
 #nullable disable
 
-namespace ShopingCarts.Migrations
+namespace ShopingCarts.Persistance.Migrations
 {
     [DbContext(typeof(ShoppingCartContext))]
-    [Migration("20230720103042_Initial")]
-    partial class Initial
+    [Migration("20230730181345_DataSeed")]
+    partial class DataSeed
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -50,6 +50,15 @@ namespace ShopingCarts.Migrations
                         .IsUnique();
 
                     b.ToTable("ShoppingCarts");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            IntegrationId = new Guid("1f510e0b-5700-4e73-a67d-fdccf8e1a897"),
+                            Total = 3000,
+                            UserId = 1
+                        });
                 });
 
             modelBuilder.Entity("ShopingCarts.Domain.Entities.ShoppingCartProduct", b =>
@@ -77,6 +86,16 @@ namespace ShopingCarts.Migrations
                     b.HasIndex("ShoppingCartId");
 
                     b.ToTable("ShoppingCartProducts");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ProductIntegrationId = new Guid("0ef1268e-33d6-49cd-a4b5-8eb94494d896"),
+                            Quantity = 1,
+                            ShoppingCartId = 1,
+                            Total = 3000
+                        });
                 });
 
             modelBuilder.Entity("ShopingCarts.Domain.Entities.User", b =>
@@ -99,6 +118,14 @@ namespace ShopingCarts.Migrations
                         .IsUnique();
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            IntegrationId = new Guid("95464765-cf3f-4ed7-b353-5d2f810dcc33"),
+                            ShoppingCartId = 1
+                        });
                 });
 
             modelBuilder.Entity("ShopingCarts.Domain.Entities.ShoppingCart", b =>

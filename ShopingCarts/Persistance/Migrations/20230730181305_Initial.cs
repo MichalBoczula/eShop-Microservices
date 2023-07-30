@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace ShopingCarts.Migrations
+namespace ShopingCarts.Persistance.Migrations
 {
     public partial class Initial : Migration
     {
