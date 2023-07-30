@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace ShopingCarts.Persistance.Migrations
+namespace Orders.Persistance.Migrations
 {
     public partial class DataSeed : Migration
     {
@@ -11,29 +11,29 @@ namespace ShopingCarts.Persistance.Migrations
         {
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "IntegrationId", "ShoppingCartId" },
-                values: new object[] { 1, new Guid("95464765-cf3f-4ed7-b353-5d2f810dcc33"), 1 });
+                columns: new[] { "Id", "IntegrationId" },
+                values: new object[] { 1, new Guid("95464765-cf3f-4ed7-b353-5d2f810dcc33") });
 
             migrationBuilder.InsertData(
-                table: "ShoppingCarts",
+                table: "Orders",
                 columns: new[] { "Id", "IntegrationId", "Total", "UserId" },
-                values: new object[] { 1, new Guid("1f510e0b-5700-4e73-a67d-fdccf8e1a897"), 3000, 1 });
+                values: new object[] { 1, new Guid("76e33392-3fa9-44f4-93e0-cf09c299c7ca"), 2000, 1 });
 
             migrationBuilder.InsertData(
-                table: "ShoppingCartProducts",
-                columns: new[] { "Id", "ProductIntegrationId", "Quantity", "ShoppingCartId", "Total" },
-                values: new object[] { 1, new Guid("0ef1268e-33d6-49cd-a4b5-8eb94494d896"), 1, 1, 3000 });
+                table: "OrderProducts",
+                columns: new[] { "Id", "OrderId", "ProductIntegrationId", "Quantity", "Total" },
+                values: new object[] { 1, 1, new Guid("55ccee28-e15d-4644-a7be-2f8a93568d6f"), 1, 2000 });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DeleteData(
-                table: "ShoppingCartProducts",
+                table: "OrderProducts",
                 keyColumn: "Id",
                 keyValue: 1);
 
             migrationBuilder.DeleteData(
-                table: "ShoppingCarts",
+                table: "Orders",
                 keyColumn: "Id",
                 keyValue: 1);
 

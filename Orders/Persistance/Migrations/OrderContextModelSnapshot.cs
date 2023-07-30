@@ -47,6 +47,15 @@ namespace Orders.Persistance.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Orders");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            IntegrationId = new Guid("76e33392-3fa9-44f4-93e0-cf09c299c7ca"),
+                            Total = 2000,
+                            UserId = 1
+                        });
                 });
 
             modelBuilder.Entity("Orders.Domain.Entities.OrderProduct", b =>
@@ -77,6 +86,16 @@ namespace Orders.Persistance.Migrations
                         .IsUnique();
 
                     b.ToTable("OrderProducts");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            OrderId = 1,
+                            ProductIntegrationId = new Guid("55ccee28-e15d-4644-a7be-2f8a93568d6f"),
+                            Quantity = 1,
+                            Total = 2000
+                        });
                 });
 
             modelBuilder.Entity("Orders.Domain.Entities.User", b =>
@@ -96,6 +115,13 @@ namespace Orders.Persistance.Migrations
                         .IsUnique();
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            IntegrationId = new Guid("95464765-cf3f-4ed7-b353-5d2f810dcc33")
+                        });
                 });
 
             modelBuilder.Entity("Orders.Domain.Entities.Order", b =>

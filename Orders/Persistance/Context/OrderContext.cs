@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Orders.Application.Contracts;
 using Orders.Domain.Entities;
+using Orders.Persistance.Seed;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
@@ -20,7 +21,7 @@ namespace Orders.Persistance.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-            //modelBuilder.SeedShoppingCarts();
+            modelBuilder.SeedOrders();
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken)

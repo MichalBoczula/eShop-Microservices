@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShopingCarts.Persistance.Context;
 
@@ -11,9 +12,10 @@ using ShopingCarts.Persistance.Context;
 namespace ShopingCarts.Persistance.Migrations
 {
     [DbContext(typeof(ShoppingCartContext))]
-    partial class ShoppingCartContextModelSnapshot : ModelSnapshot
+    [Migration("20230730182943_DataSeed")]
+    partial class DataSeed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

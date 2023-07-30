@@ -5,14 +5,14 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ShopingCarts.Persistance.Context;
+using Orders.Persistance.Context;
 
 #nullable disable
 
-namespace ShopingCarts.Persistance.Migrations
+namespace Orders.Persistance.Migrations
 {
-    [DbContext(typeof(ShoppingCartContext))]
-    [Migration("20230730181345_DataSeed")]
+    [DbContext(typeof(OrderContext))]
+    [Migration("20230730182858_DataSeed")]
     partial class DataSeed
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,7 +24,7 @@ namespace ShopingCarts.Persistance.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("ShopingCarts.Domain.Entities.ShoppingCart", b =>
+            modelBuilder.Entity("Orders.Domain.Entities.Order", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -46,22 +46,21 @@ namespace ShopingCarts.Persistance.Migrations
                     b.HasIndex("IntegrationId")
                         .IsUnique();
 
-                    b.HasIndex("UserId")
-                        .IsUnique();
+                    b.HasIndex("UserId");
 
-                    b.ToTable("ShoppingCarts");
+                    b.ToTable("Orders");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            IntegrationId = new Guid("1f510e0b-5700-4e73-a67d-fdccf8e1a897"),
-                            Total = 3000,
+                            IntegrationId = new Guid("76e33392-3fa9-44f4-93e0-cf09c299c7ca"),
+                            Total = 2000,
                             UserId = 1
                         });
                 });
 
-            modelBuilder.Entity("ShopingCarts.Domain.Entities.ShoppingCartProduct", b =>
+            modelBuilder.Entity("Orders.Domain.Entities.OrderProduct", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -69,13 +68,13 @@ namespace ShopingCarts.Persistance.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
                     b.Property<Guid>("ProductIntegrationId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ShoppingCartId")
                         .HasColumnType("int");
 
                     b.Property<int>("Total")
@@ -83,22 +82,25 @@ namespace ShopingCarts.Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ShoppingCartId");
+                    b.HasIndex("OrderId");
 
-                    b.ToTable("ShoppingCartProducts");
+                    b.HasIndex("ProductIntegrationId")
+                        .IsUnique();
+
+                    b.ToTable("OrderProducts");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            ProductIntegrationId = new Guid("0ef1268e-33d6-49cd-a4b5-8eb94494d896"),
+                            OrderId = 1,
+                            ProductIntegrationId = new Guid("55ccee28-e15d-4644-a7be-2f8a93568d6f"),
                             Quantity = 1,
-                            ShoppingCartId = 1,
-                            Total = 3000
+                            Total = 2000
                         });
                 });
 
-            modelBuilder.Entity("ShopingCarts.Domain.Entities.User", b =>
+            modelBuilder.Entity("Orders.Domain.Entities.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -108,9 +110,6 @@ namespace ShopingCarts.Persistance.Migrations
 
                     b.Property<Guid>("IntegrationId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("ShoppingCartId")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -123,42 +122,40 @@ namespace ShopingCarts.Persistance.Migrations
                         new
                         {
                             Id = 1,
-                            IntegrationId = new Guid("95464765-cf3f-4ed7-b353-5d2f810dcc33"),
-                            ShoppingCartId = 1
+                            IntegrationId = new Guid("95464765-cf3f-4ed7-b353-5d2f810dcc33")
                         });
                 });
 
-            modelBuilder.Entity("ShopingCarts.Domain.Entities.ShoppingCart", b =>
+            modelBuilder.Entity("Orders.Domain.Entities.Order", b =>
                 {
-                    b.HasOne("ShopingCarts.Domain.Entities.User", "UserRef")
-                        .WithOne("ShoppingCartRef")
-                        .HasForeignKey("ShopingCarts.Domain.Entities.ShoppingCart", "UserId")
+                    b.HasOne("Orders.Domain.Entities.User", "UserRef")
+                        .WithMany("Orders")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("UserRef");
                 });
 
-            modelBuilder.Entity("ShopingCarts.Domain.Entities.ShoppingCartProduct", b =>
+            modelBuilder.Entity("Orders.Domain.Entities.OrderProduct", b =>
                 {
-                    b.HasOne("ShopingCarts.Domain.Entities.ShoppingCart", "ShoppingCartRef")
-                        .WithMany("ShoppingCartProducts")
-                        .HasForeignKey("ShoppingCartId")
+                    b.HasOne("Orders.Domain.Entities.Order", "OrderRef")
+                        .WithMany("OrderProducts")
+                        .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ShoppingCartRef");
+                    b.Navigation("OrderRef");
                 });
 
-            modelBuilder.Entity("ShopingCarts.Domain.Entities.ShoppingCart", b =>
+            modelBuilder.Entity("Orders.Domain.Entities.Order", b =>
                 {
-                    b.Navigation("ShoppingCartProducts");
+                    b.Navigation("OrderProducts");
                 });
 
-            modelBuilder.Entity("ShopingCarts.Domain.Entities.User", b =>
+            modelBuilder.Entity("Orders.Domain.Entities.User", b =>
                 {
-                    b.Navigation("ShoppingCartRef")
-                        .IsRequired();
+                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }

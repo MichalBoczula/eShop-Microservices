@@ -11,7 +11,7 @@ namespace ShopingCarts.Persistance.Seed
               new User
               {
                   Id = 1,
-                  IntegrationId = Guid.NewGuid(),
+                  IntegrationId = new Guid("95464765-CF3F-4ED7-B353-5D2F810DCC33"),
                   ShoppingCartId = 1,
               }
           );
