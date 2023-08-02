@@ -4,7 +4,7 @@ using Products.Domain.Entities;
 
 namespace Products.Application.Features.Queries.GetProductsByIntegrationId
 {
-    public class ProductDto : IMapFrom<Product>
+    internal class ProductDto : IMapFrom<Product>
     {
         public int Id { get; set; }
         public string Name { get; set; }

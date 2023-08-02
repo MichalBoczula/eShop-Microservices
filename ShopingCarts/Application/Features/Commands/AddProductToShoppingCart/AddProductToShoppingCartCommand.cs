@@ -1,6 +1,9 @@
-﻿namespace ShopingCarts.Application.Features.Commands.AddProductToShoppingCart
+﻿using MediatR;
+
+namespace ShopingCarts.Application.Features.Commands.AddProductToShoppingCart
 {
-    public class AddProductToShoppingCartCommand
+    public class AddProductToShoppingCartCommand : IRequest<AddProductToShoppingCartCommandResult>
     {
+        public AddProductToShoppingCartCommandExternal ExternalContract { get; set; }
     }
 }

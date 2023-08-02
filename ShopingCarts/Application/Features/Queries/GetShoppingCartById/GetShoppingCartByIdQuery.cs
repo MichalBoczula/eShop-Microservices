@@ -1,6 +1,9 @@
-﻿namespace ShopingCarts.Application.Features.Queries.GetShoppingCartById
+﻿using MediatR;
+
+namespace ShopingCarts.Application.Features.Queries.GetShoppingCartById
 {
-    public class GetShoppingCartByIdQuery
+    internal class GetShoppingCartByIdQuery : IRequest<GetShoppingCartByIdQueryResult>
     {
+        public GetShoppingCartByIdQueryExternal ExternalContract { get; set; }
     }
 }
