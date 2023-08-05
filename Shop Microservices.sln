@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Products", "Products\Products.csproj", "{0B5314F2-E21A-41FE-A27A-9B8D475AD03A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Products", "Products\Products.csproj", "{0B5314F2-E21A-41FE-A27A-9B8D475AD03A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopingCarts", "ShopingCarts\ShopingCarts.csproj", "{563660C0-0DAC-4B97-B1EA-3430BB7D7C03}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShopingCarts", "ShopingCarts\ShopingCarts.csproj", "{563660C0-0DAC-4B97-B1EA-3430BB7D7C03}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orders", "Orders\Orders.csproj", "{C4024D9D-9845-400B-8B04-8EDC196A1620}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orders", "Orders\Orders.csproj", "{C4024D9D-9845-400B-8B04-8EDC196A1620}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{446FC748-CB99-4476-8E02-DCD1B79A5670}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integrations", "Integrations", "{B4BF252B-B4AD-4150-AAFC-66C3B7B59E07}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Integrations", "Integrations\Integrations.csproj", "{C16284FC-5D8C-488D-AE3A-4991A2FD2D32}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +31,10 @@ Global
 		{C4024D9D-9845-400B-8B04-8EDC196A1620}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4024D9D-9845-400B-8B04-8EDC196A1620}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4024D9D-9845-400B-8B04-8EDC196A1620}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C16284FC-5D8C-488D-AE3A-4991A2FD2D32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C16284FC-5D8C-488D-AE3A-4991A2FD2D32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C16284FC-5D8C-488D-AE3A-4991A2FD2D32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C16284FC-5D8C-488D-AE3A-4991A2FD2D32}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -2,7 +2,9 @@
 {
     public class AddProductToShoppingCartCommandExternal
     {
-        public int ShoppingCartProductId { get; set; }
+        public int ShoppingCartId { get; set; }
+        public int? ShoppingCartProductId { get; set; }
+        public Guid? ShoppingCartProductIntegrationId { get; set; }
         public int ShoppingCartProductQuantity { get; set; }
     }
 }
