@@ -2,7 +2,7 @@
 
 namespace Products.Application.Features.Queries.GetAllProducts
 {
-    public class GetAllProductsQuery : IRequest<GetAllProductsQueryResult>
+    internal class GetAllProductsQuery : IRequest<GetAllProductsQueryResult>
     {
     }
 }

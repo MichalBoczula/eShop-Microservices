@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("Products.Tests")]
 namespace Products.Application.Mapping
 {
     internal class MappingProfile : Profile

@@ -4,7 +4,10 @@ using Products.Domain.Entities;
 using Products.Persistance.Seed;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("Products.Tests")]
+[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
 namespace Products.Persistance.Context
 {
     internal class ProductsContext : DbContext, IProductsContext

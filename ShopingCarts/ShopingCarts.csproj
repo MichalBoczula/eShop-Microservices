@@ -27,10 +27,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ExternalServices\SynchComunication\HttpClients\Concrete\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Integrations\Integrations.csproj" />
   </ItemGroup>
 
