@@ -5,6 +5,7 @@ using ShopingCarts.Application.Contracts;
 using Microsoft.EntityFrameworkCore;
 using ShopingCarts.Persistance.Seed;
 using ShopingCarts.Domain.Entities;
+using System.Runtime.CompilerServices;
 
 namespace ShopingCarts.Persistance.Context
 {

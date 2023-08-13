@@ -3,6 +3,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using ShopingCarts.Application.Contracts;
+using ShopingCarts.Application.Features.Commands.AddProductToShoppingCart.Dtos;
 using ShopingCarts.Application.Features.Common;
 using ShopingCarts.Domain.Entities;
 using ShopingCarts.ExternalServices.SynchComunication.HttpClients.Abstract;
@@ -44,31 +45,35 @@ namespace ShopingCarts.Application.Features.Commands.AddProductToShoppingCart
                 }
                 else
                 {
-                    var contract = new List<Guid>
+                    if (request.ExternalContract.ShoppingCartProductIntegrationId.HasValue)
                     {
-                        request.ExternalContract.ShoppingCartProductIntegrationId.Value
-                    };
-
-                    var products = await this._productHttpService.GetProductsByIntegratinoIds(contract);
-
-                    if (products.Any())
-                    {
-                        var shoppingCartProduct = new ShoppingCartProduct()
+                        var contract = new List<Guid>
                         {
-                            ShoppingCartId = request.ExternalContract.ShoppingCartId,
-                            Quantity = request.ExternalContract.ShoppingCartProductQuantity,
-                            Total = products.FirstOrDefault().Price * request.ExternalContract.ShoppingCartProductQuantity,
-                            ProductIntegrationId = request.ExternalContract.ShoppingCartProductIntegrationId.Value
+                            request.ExternalContract.ShoppingCartProductIntegrationId.Value
                         };
 
-                        this._context.ShoppingCartProducts.Add(shoppingCartProduct);
-                        await this._context.SaveChangesAsync(cancellationToken);
+                        var products = await this._productHttpService.GetProductsByIntegratinoIds(contract);
 
-                        return new AddProductToShoppingCartCommandResult()
+                        if (products.Any())
                         {
-                            PositiveMessage = $"Added new product with Id {shoppingCartProduct.Id}",
-                            ErrorDescription = null
-                        };
+                            //var shoppingCartProductDto =  this._mapper.Map<ShoppingCartProductDto>((request.ExternalContract, products.First()));
+                            var shoppingCartProduct = new ShoppingCartProduct()
+                            {
+                                ShoppingCartId = request.ExternalContract.ShoppingCartId,
+                                Quantity = request.ExternalContract.ShoppingCartProductQuantity,
+                                Total = products.FirstOrDefault().Price * request.ExternalContract.ShoppingCartProductQuantity,
+                                ProductIntegrationId = request.ExternalContract.ShoppingCartProductIntegrationId.Value
+                            };
+                            //var shoppingCartProduct = this._mapper.Map<ShoppingCartProduct>((products, request.ExternalContract));
+                            this._context.ShoppingCartProducts.Add(shoppingCartProduct);
+                            await this._context.SaveChangesAsync(cancellationToken);
+
+                            return new AddProductToShoppingCartCommandResult()
+                            {
+                                PositiveMessage = $"Added new product with Id {shoppingCartProduct.Id}",
+                                ErrorDescription = null
+                            };
+                        }
                     }
                     return new AddProductToShoppingCartCommandResult()
                     {

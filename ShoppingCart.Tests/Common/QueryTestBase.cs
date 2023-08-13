@@ -1,17 +1,17 @@
 ﻿using AutoMapper;
-using Products.Application.Mapping;
-using Products.Persistance.Context;
+using ShopingCarts.Application.Mapping;
+using ShopingCarts.Persistance.Context;
 
-namespace Products.Tests.Common
+namespace ShoppingCart.Tests.Common
 {
     public class QueryTestBase : IDisposable
     {
-        internal ProductsContext Context { get; private set; }
+        internal ShoppingCartContext Context { get; private set; }
         public IMapper Mapper { get; private set; }
 
         public QueryTestBase()
         {
-            Context = ProductsContextFactory.Create().Object;
+            Context = ShoppingCartContextFactory.Create().Object;
 
             var configurationProvider = new MapperConfiguration(cfg =>
             {
@@ -23,12 +23,12 @@ namespace Products.Tests.Common
 
         public void Dispose()
         {
-            ProductsContextFactory.Destroy(Context);
+            ShoppingCartContextFactory.Destroy(Context);
         }
-    }
 
-    [CollectionDefinition("QueryCollection")]
-    public class QueryCollection : ICollectionFixture<QueryTestBase>
-    {
+        [CollectionDefinition("QueryCollection")]
+        public class QueryCollection : ICollectionFixture<QueryTestBase>
+        {
+        }
     }
 }

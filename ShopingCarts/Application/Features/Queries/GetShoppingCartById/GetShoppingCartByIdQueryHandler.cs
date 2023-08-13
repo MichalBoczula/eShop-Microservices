@@ -28,7 +28,14 @@ namespace ShopingCarts.Application.Features.Queries.GetShoppingCartById
                                  .ProjectTo<ShoppingCartDto>(this._mapper.ConfigurationProvider)
                                  .FirstOrDefaultAsync(cancellationToken);
 
-                return new GetShoppingCartByIdQueryResult { ShoppingCartDto = result, ErrorDescription = null };
+                if (result is null) 
+                {
+                    return new GetShoppingCartByIdQueryResult { ShoppingCartDto = null, ErrorDescription = $"Shopping cart identify by Id: {request.ExternalContract.ShoppingCartId} doesn't exist."};
+                }
+                else
+                {
+                    return new GetShoppingCartByIdQueryResult { ShoppingCartDto = result, ErrorDescription = null };
+                }
             }
             catch (Exception ex)
             {

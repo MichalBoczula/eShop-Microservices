@@ -4,7 +4,7 @@ using Products.Persistance.Context;
 
 namespace Products.Tests.Common
 {
-    internal static class ProductsManagerDbContextFactory
+    internal static class ProductsContextFactory
     {
         public static Mock<ProductsContext> Create()
         {
