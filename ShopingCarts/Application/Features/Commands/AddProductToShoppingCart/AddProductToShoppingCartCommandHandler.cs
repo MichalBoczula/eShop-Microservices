@@ -3,7 +3,6 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using ShopingCarts.Application.Contracts;
-using ShopingCarts.Application.Features.Commands.AddProductToShoppingCart.Dtos;
 using ShopingCarts.Application.Features.Common;
 using ShopingCarts.Domain.Entities;
 using ShopingCarts.ExternalServices.SynchComunication.HttpClients.Abstract;
@@ -56,15 +55,8 @@ namespace ShopingCarts.Application.Features.Commands.AddProductToShoppingCart
 
                         if (products.Any())
                         {
-                            //var shoppingCartProductDto =  this._mapper.Map<ShoppingCartProductDto>((request.ExternalContract, products.First()));
-                            var shoppingCartProduct = new ShoppingCartProduct()
-                            {
-                                ShoppingCartId = request.ExternalContract.ShoppingCartId,
-                                Quantity = request.ExternalContract.ShoppingCartProductQuantity,
-                                Total = products.FirstOrDefault().Price * request.ExternalContract.ShoppingCartProductQuantity,
-                                ProductIntegrationId = request.ExternalContract.ShoppingCartProductIntegrationId.Value
-                            };
-                            //var shoppingCartProduct = this._mapper.Map<ShoppingCartProduct>((products, request.ExternalContract));
+                            var shoppingCartProduct = this._mapper.Map<ShoppingCartProduct>((request.ExternalContract, products.First()));
+                          
                             this._context.ShoppingCartProducts.Add(shoppingCartProduct);
                             await this._context.SaveChangesAsync(cancellationToken);
 
