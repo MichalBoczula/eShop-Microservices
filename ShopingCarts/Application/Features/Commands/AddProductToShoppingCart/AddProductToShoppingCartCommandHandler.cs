@@ -31,7 +31,7 @@ namespace ShopingCarts.Application.Features.Commands.AddProductToShoppingCart
                 {
                     var product = shoppingCart.ShoppingCartProducts
                         .First(x => x.Id == request.ExternalContract.ShoppingCartProductId);
-                    product.Quantity = request.ExternalContract.ShoppingCartProductQuantity;
+                    product.Quantity += request.ExternalContract.ShoppingCartProductQuantity;
 
                     this._context.ShoppingCartProducts.Update(product);
                     await this._context.SaveChangesAsync(cancellationToken);
