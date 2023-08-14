@@ -7,7 +7,6 @@ using ShopingCarts.Application.Features.Queries.GetShoppingCartById;
 using ShopingCarts.ExternalServices.SynchComunication.HttpClients.Abstract;
 using ShopingCarts.Persistance.Context;
 using ShoppingCart.Tests.Common;
-using System.Threading;
 
 namespace ShoppingCart.Tests.Features.Commands.RemoveProductFromShoppingCart
 {

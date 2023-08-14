@@ -4,7 +4,6 @@ using ShopingCarts.Application.Features.Queries.GetShoppingCartById;
 using ShopingCarts.Application.Features.Queries.GetShoppingCartById.Dtos;
 using ShopingCarts.Persistance.Context;
 using ShoppingCart.Tests.Common;
-using System.Security.Principal;
 
 namespace ShoppingCart.Tests.Features.Queries.GetShoppingCartById
 {

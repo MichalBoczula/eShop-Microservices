@@ -1,6 +1,10 @@
-﻿namespace ShopingCarts.Application.Features.Commands.CreateShoppingCart
+﻿using MediatR;
+using ShopingCarts.Application.Features.Commands.Checkout;
+
+namespace ShopingCarts.Application.Features.Commands.CreateShoppingCart
 {
-    public class CheckoutCommand
+    internal class CheckoutCommand : IRequest<CheckoutCommandResult>
     {
+        public CheckoutCommandExternal ExternalContract { get; set; }
     }
 }

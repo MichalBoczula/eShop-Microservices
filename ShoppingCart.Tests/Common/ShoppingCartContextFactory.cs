@@ -1,11 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Moq;
 using ShopingCarts.Persistance.Context;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ShoppingCart.Tests.Common
 {

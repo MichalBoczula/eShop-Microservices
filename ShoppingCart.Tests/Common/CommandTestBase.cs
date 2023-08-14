@@ -2,7 +2,6 @@
 using Moq;
 using ShopingCarts.Application.Mapping;
 using ShopingCarts.ExternalServices.SynchComunication.HttpClients.Abstract;
-using ShopingCarts.ExternalServices.SynchComunication.HttpClients.Concrete;
 using ShopingCarts.Persistance.Context;
 
 namespace ShoppingCart.Tests.Common
@@ -12,6 +11,7 @@ namespace ShoppingCart.Tests.Common
         internal ShoppingCartContext Context { get; private set; }
         public IMapper Mapper { get; private set; }
         internal Mock<IProductHttpService> ProductHttpService { get; private set; }
+        internal Mock<IOrderHttpService> OrderHttpService { get; private set; }
 
         public CommandTestBase()
         {
@@ -25,6 +25,8 @@ namespace ShoppingCart.Tests.Common
             Mapper = configurationProvider.CreateMapper();
 
             ProductHttpService = new Mock<IProductHttpService>();
+
+            OrderHttpService = new Mock<IOrderHttpService>();
         }
 
         public void Dispose()
@@ -39,6 +41,11 @@ namespace ShoppingCart.Tests.Common
 
         [CollectionDefinition("RemoveCommandCollection")]
         public class RemoveCommandTestBase : ICollectionFixture<CommandTestBase>
+        {
+        }
+
+        [CollectionDefinition("CheckoutCommandCollection")]
+        public class CheckoutCommandTestBase : ICollectionFixture<CommandTestBase>
         {
         }
     }

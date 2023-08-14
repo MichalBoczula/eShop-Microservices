@@ -8,6 +8,7 @@ namespace ShopingCarts.DependencyInjections
         internal static IServiceCollection AddExternalServices(this IServiceCollection services)
         {
             services.AddScoped<IProductHttpService, ProductHttpService>();
+            services.AddScoped<IOrderHttpService, OrderHttpService>();
             return services;
         }
     }
