@@ -23,7 +23,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShoppingCart.Tests", "Shopp
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AutomapperTests", "AutomapperTests", "{F6ACF323-4370-4DD9-9A70-79E2E56E8829}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoMapper.Tests", "AutoMapper.Tests\AutoMapper.Tests.csproj", "{8BA8AAC1-B175-4399-941B-1D22E8A059A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoMapper.Tests", "AutoMapper.Tests\AutoMapper.Tests.csproj", "{8BA8AAC1-B175-4399-941B-1D22E8A059A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orders.Tests", "Orders.Tests\Orders.Tests.csproj", "{D6B05E98-98DC-4B62-8774-D8C9640DDD8D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,6 +61,10 @@ Global
 		{8BA8AAC1-B175-4399-941B-1D22E8A059A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8BA8AAC1-B175-4399-941B-1D22E8A059A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8BA8AAC1-B175-4399-941B-1D22E8A059A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6B05E98-98DC-4B62-8774-D8C9640DDD8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6B05E98-98DC-4B62-8774-D8C9640DDD8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6B05E98-98DC-4B62-8774-D8C9640DDD8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6B05E98-98DC-4B62-8774-D8C9640DDD8D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -72,6 +78,7 @@ Global
 		{9F30CB5D-C863-4381-89D3-ADB664353EF1} = {384BBFC9-FC10-4843-AF91-EE7E2C0EBB60}
 		{F6ACF323-4370-4DD9-9A70-79E2E56E8829} = {62B329F9-C7AA-42A3-9EB5-E9A23B263657}
 		{8BA8AAC1-B175-4399-941B-1D22E8A059A2} = {F6ACF323-4370-4DD9-9A70-79E2E56E8829}
+		{D6B05E98-98DC-4B62-8774-D8C9640DDD8D} = {384BBFC9-FC10-4843-AF91-EE7E2C0EBB60}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D35A79D4-C131-415B-ACA8-D585E2500766}

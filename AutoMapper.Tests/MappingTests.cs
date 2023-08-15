@@ -23,5 +23,16 @@ namespace AutoMapper.Tests
 
             config.AssertConfigurationIsValid();
         }
+
+        [Fact]
+        public void OrdersAutomapperTests()
+        {
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<Orders.Application.Mapping.MappingProfile>();
+            });
+
+            config.AssertConfigurationIsValid();
+        }
     }
 }
