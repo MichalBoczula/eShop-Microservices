@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentAssertions;
+using Integrations.Orders.Request;
 using Integrations.Orders.Results;
 using Moq;
 using ShopingCarts.Application.Features.Commands.Checkout;
@@ -50,7 +51,7 @@ namespace ShoppingCart.Tests.Features.Commands.Checkout
                 PositiveMessage = "New order identify by id 1 has been created",
                 ErrorDescription = null
             };
-            _orderHttpService.Setup(x => x.CreateOrder(It.IsAny<Guid>())).ReturnsAsync(externalResponse);
+            _orderHttpService.Setup(x => x.CreateOrder(It.IsAny<ShoppingCartExternal>())).ReturnsAsync(externalResponse);
             //act
             var result = await handler.Handle(
                   query,
@@ -89,7 +90,7 @@ namespace ShoppingCart.Tests.Features.Commands.Checkout
                 PositiveMessage = "New order identify by id 1 has been created",
                 ErrorDescription = null
             };
-            _orderHttpService.Setup(x => x.CreateOrder(It.IsAny<Guid>())).ReturnsAsync(externalResponse);
+            _orderHttpService.Setup(x => x.CreateOrder(It.IsAny<ShoppingCartExternal>())).ReturnsAsync(externalResponse);
             //act
             var result = await handler.Handle(
                   query,
@@ -128,7 +129,7 @@ namespace ShoppingCart.Tests.Features.Commands.Checkout
                 PositiveMessage = null,
                 ErrorDescription = "Error occured during creating order process for shopping cart identify by 1-1-1"
             };
-            _orderHttpService.Setup(x => x.CreateOrder(It.IsAny<Guid>())).ReturnsAsync(externalResponse);
+            _orderHttpService.Setup(x => x.CreateOrder(It.IsAny<ShoppingCartExternal>())).ReturnsAsync(externalResponse);
             //act
             var result = await handler.Handle(
                   query,

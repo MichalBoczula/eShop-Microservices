@@ -41,11 +41,11 @@ namespace Orders.Tests.Features.Queries.GetOrdersByUserIntegrationId
         }
 
         [Fact]
-        public async Task ShouldReturnEmptyList()
+        public async Task ShouldReturnError()
         {
             //arrange
             var handler = new GetOrdersByUserIntegrationIdQueryHandler(_context, _mapper);
-            //act
+            //act 
             var result = await handler.Handle(
                     new GetOrdersByUserIntegrationIdQuery()
                     {

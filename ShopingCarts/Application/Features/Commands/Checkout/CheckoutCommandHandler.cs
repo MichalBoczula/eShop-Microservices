@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Integrations.Orders.Request;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using ShopingCarts.Application.Contracts;
@@ -21,9 +22,12 @@ namespace ShopingCarts.Application.Features.Commands.Checkout
         {
             try
             {
-                var shoppingCart = await this._context.ShoppingCarts.FirstOrDefaultAsync(x => x.Id == request.ExternalContract.ShoppingCartId);
+                var shoppingCart = await this._context.ShoppingCarts
+                    .Include(x => x.UserRef)
+                    .Include(x => x.ShoppingCartProducts)
+                    .FirstOrDefaultAsync(x => x.Id == request.ExternalContract.ShoppingCartId);
 
-                if(shoppingCart == null)
+                if (shoppingCart == null)
                 {
                     return new CheckoutCommandResult()
                     {
@@ -32,9 +36,15 @@ namespace ShopingCarts.Application.Features.Commands.Checkout
                     };
                 }
 
-                var externalResponse = await this._orderHttpService.CreateOrder(shoppingCart.IntegrationId);
+                var shoppingCartExternal = this._mapper.Map<ShoppingCartExternal>(shoppingCart);
 
-                if(externalResponse.PositiveMessage != null)
+                var products = this._mapper.Map< List<ShoppingCartProductExternal>>(shoppingCartExternal.Products);
+
+                shoppingCartExternal.Products = products;
+
+                var externalResponse = await this._orderHttpService.CreateOrder(shoppingCartExternal);
+
+                if (externalResponse.PositiveMessage != null)
                 {
                     this._context.ShoppingCarts.Remove(shoppingCart);
                     await this._context.SaveChangesAsync(cancellationToken);

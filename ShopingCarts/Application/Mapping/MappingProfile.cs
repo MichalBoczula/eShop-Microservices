@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Integrations.Orders.Request;
 using Integrations.Products.Results;
 using ShopingCarts.Application.Features.Commands.AddProductToShoppingCart;
 using ShopingCarts.Domain.Entities;
@@ -13,7 +14,8 @@ namespace ShopingCarts.Application.Mapping
         public MappingProfile()
         {
             ApplyMappingFromAssembly(Assembly.GetExecutingAssembly());
-            CreateShoppingCartProductForAddProductToShoppingCartCommand();
+            this.CreateShoppingCartProductForAddProductToShoppingCartCommand();
+            this.CreateShoppingCartExternalForCheckoutCommand();
         }
 
         private void ApplyMappingFromAssembly(Assembly assembly)
@@ -32,7 +34,6 @@ namespace ShopingCarts.Application.Mapping
                     });
         }
 
-
         private void CreateShoppingCartProductForAddProductToShoppingCartCommand()
         {
             CreateMap<(AddProductToShoppingCartCommandExternal ext, ProductDto prod), ShoppingCartProduct>()
@@ -42,6 +43,19 @@ namespace ShopingCarts.Application.Mapping
                            .ForMember(d => d.Total, opt => opt.MapFrom(s => s.ext.ShoppingCartProductQuantity * s.prod.Price))
                            .ForMember(d => d.Id, opt => opt.Ignore())
                            .ForMember(d => d.ShoppingCartRef, opt => opt.Ignore());
+        }
+
+        private void CreateShoppingCartExternalForCheckoutCommand()
+        {
+            CreateMap<ShoppingCartProductExternal, ShoppingCartProduct>()
+                .ForMember(d => d.Id, opt => opt.Ignore())
+                .ForMember(d => d.ShoppingCartId, opt => opt.Ignore())
+                .ForMember(d => d.ShoppingCartRef, opt => opt.Ignore());
+
+            CreateMap<ShoppingCart, ShoppingCartExternal>()
+                .ForMember(d => d.ShoppingCartIntegrationId, opt => opt.MapFrom(s => s.IntegrationId))
+                .ForMember(d => d.UserIntegrationId, opt => opt.MapFrom(s => s.UserRef.IntegrationId))
+                .ForMember(d => d.Products, opt => opt.Ignore());
         }
     }
 }
