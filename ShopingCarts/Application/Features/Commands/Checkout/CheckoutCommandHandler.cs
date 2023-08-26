@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using ShopingCarts.Application.Contracts;
 using ShopingCarts.Application.Features.Commands.CreateShoppingCart;
 using ShopingCarts.Application.Features.Common;
-using ShopingCarts.ExternalServices.SynchComunication.HttpClients.Abstract;
+using ShopingCarts.ExternalServices.SynchComunication.HttpClients.Orders.Abstract;
 
 namespace ShopingCarts.Application.Features.Commands.Checkout
 {

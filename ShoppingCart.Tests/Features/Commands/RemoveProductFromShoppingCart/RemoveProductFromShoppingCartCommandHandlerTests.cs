@@ -4,7 +4,8 @@ using Moq;
 using ShopingCarts.Application.Features.Commands.AddProductToShoppingCart;
 using ShopingCarts.Application.Features.Commands.RemoveProductFromShoppingCart;
 using ShopingCarts.Application.Features.Queries.GetShoppingCartById;
-using ShopingCarts.ExternalServices.SynchComunication.HttpClients.Abstract;
+using ShopingCarts.ExternalServices.SynchComunication.HttpClients.Concrete.Products;
+using ShopingCarts.ExternalServices.SynchComunication.HttpClients.Products.Abstract;
 using ShopingCarts.Persistance.Context;
 using ShoppingCart.Tests.Common;
 
@@ -15,13 +16,13 @@ namespace ShoppingCart.Tests.Features.Commands.RemoveProductFromShoppingCart
     {
         private readonly ShoppingCartContext _context;
         private readonly IMapper _mapper;
-        private readonly Mock<IProductHttpService> _productHttpService;
+        private readonly Mock<IProductsHttpRequestHandler> _productsHttpRequestHandler;
 
         public RemoveProductFromShoppingCartCommandHandlerTests(CommandTestBase testBase)
         {
             _context = testBase.Context;
             _mapper = testBase.Mapper;
-            _productHttpService = testBase.ProductHttpService;
+            _productsHttpRequestHandler = testBase.ProductsHttpRequestHandler;
         }
 
         [Fact]
@@ -46,7 +47,7 @@ namespace ShoppingCart.Tests.Features.Commands.RemoveProductFromShoppingCart
                     ShoppingCartId = 1
                 }
             };
-            var addProductToShoppingCartCommandHandler = new AddProductToShoppingCartCommandHandler(_context, _mapper, _productHttpService.Object);
+            var addProductToShoppingCartCommandHandler = new AddProductToShoppingCartCommandHandler(_context, _mapper, _productsHttpRequestHandler.Object);
             var addProductToShoppingCartCommand = new AddProductToShoppingCartCommand()
             {
                 ExternalContract = new AddProductToShoppingCartCommandExternal
@@ -143,7 +144,7 @@ namespace ShoppingCart.Tests.Features.Commands.RemoveProductFromShoppingCart
                     ShoppingCartId = 1
                 }
             };
-            var addProductToShoppingCartCommandHandler = new AddProductToShoppingCartCommandHandler(_context, _mapper, _productHttpService.Object);
+            var addProductToShoppingCartCommandHandler = new AddProductToShoppingCartCommandHandler(_context, _mapper, _productsHttpRequestHandler.Object);
             var addProductToShoppingCartCommand = new AddProductToShoppingCartCommand()
             {
                 ExternalContract = new AddProductToShoppingCartCommandExternal

@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using FluentAssertions;
-using Integrations.Products.Results;
+using Integrations.Products.GetProductsByIntegrationId.Results;
 using Moq;
 using ShopingCarts.Application.Features.Commands.AddProductToShoppingCart;
 using ShopingCarts.Application.Features.Queries.GetShoppingCartById;
 using ShopingCarts.Domain.Entities;
-using ShopingCarts.ExternalServices.SynchComunication.HttpClients.Abstract;
+using ShopingCarts.ExternalServices.SynchComunication.HttpClients.Products.Abstract;
 using ShopingCarts.Persistance.Context;
 using ShoppingCart.Tests.Common;
 
@@ -16,20 +16,20 @@ namespace ShoppingCart.Tests.Features.Commands.AddProductToShoppingCart
     {
         private readonly ShoppingCartContext _context;
         private readonly IMapper _mapper;
-        private readonly Mock<IProductHttpService> _productHttpService;
+        private readonly Mock<IProductsHttpRequestHandler> _productsHttpRequestHandler;
 
         public AddProductToShoppingCartCommandHandlerTests(CommandTestBase testBase)
         {
             _context = testBase.Context;
             _mapper = testBase.Mapper;
-            _productHttpService = testBase.ProductHttpService;
+            _productsHttpRequestHandler = testBase.ProductsHttpRequestHandler;
         }
 
         [Fact]
         public async Task ShouldAddAnotherToExistingProduct()
         {
             //arrange
-            var handler = new AddProductToShoppingCartCommandHandler(_context, _mapper, _productHttpService.Object);
+            var handler = new AddProductToShoppingCartCommandHandler(_context, _mapper, _productsHttpRequestHandler.Object);
             var query = new AddProductToShoppingCartCommand()
             {
                 ExternalContract = new AddProductToShoppingCartCommandExternal
@@ -65,7 +65,7 @@ namespace ShoppingCart.Tests.Features.Commands.AddProductToShoppingCart
         public async Task ShouldReturnErrorProductDoesNotExistinShoppingCart()
         {
             //arrange
-            var handler = new AddProductToShoppingCartCommandHandler(_context, _mapper, _productHttpService.Object);
+            var handler = new AddProductToShoppingCartCommandHandler(_context, _mapper, _productsHttpRequestHandler.Object);
             var query = new AddProductToShoppingCartCommand()
             {
                 ExternalContract = new AddProductToShoppingCartCommandExternal
@@ -102,9 +102,9 @@ namespace ShoppingCart.Tests.Features.Commands.AddProductToShoppingCart
             //arrange
             var integrationId = Guid.NewGuid();
             var integrationIds = new List<Guid>() { integrationId };
-            var products = new List<ProductDto>()
+            var products = new List<ProductExternal>()
             {
-                new ProductDto
+                new ProductExternal
                 {
                     Id = 2,
                     Name = "test",
@@ -112,7 +112,7 @@ namespace ShoppingCart.Tests.Features.Commands.AddProductToShoppingCart
                     ImgName = "test"
                 }
             };
-            var handler = new AddProductToShoppingCartCommandHandler(_context, _mapper, _productHttpService.Object);
+            var handler = new AddProductToShoppingCartCommandHandler(_context, _mapper, _productsHttpRequestHandler.Object);
             var query = new AddProductToShoppingCartCommand()
             {
                 ExternalContract = new AddProductToShoppingCartCommandExternal
@@ -122,7 +122,7 @@ namespace ShoppingCart.Tests.Features.Commands.AddProductToShoppingCart
                     ShoppingCartProductQuantity = 1
                 }
             };
-            _productHttpService.Setup(x => x.GetProductsByIntegratinoIds(integrationIds)).ReturnsAsync(products);
+            _productsHttpRequestHandler.Setup(x => x.GetProductsByIntegrationIds(integrationIds)).ReturnsAsync(new GetProductsByIntegrationIdQueryResult { Products = products } );
             var getShoppingCartByIdQueryHandler = new GetShoppingCartByIdQueryHandler(_context, _mapper);
             var getShoppingCartByIdQuery = new GetShoppingCartByIdQuery()
             {
@@ -150,8 +150,8 @@ namespace ShoppingCart.Tests.Features.Commands.AddProductToShoppingCart
             //arrange
             var integrationId = Guid.NewGuid();
             var integrationIds = new List<Guid>() { integrationId };
-            var products = new List<ProductDto>();
-            var handler = new AddProductToShoppingCartCommandHandler(_context, _mapper, _productHttpService.Object);
+            var products = new List<ProductExternal>();
+            var handler = new AddProductToShoppingCartCommandHandler(_context, _mapper, _productsHttpRequestHandler.Object);
             var query = new AddProductToShoppingCartCommand()
             {
                 ExternalContract = new AddProductToShoppingCartCommandExternal
@@ -161,7 +161,7 @@ namespace ShoppingCart.Tests.Features.Commands.AddProductToShoppingCart
                     ShoppingCartProductQuantity = 1
                 }
             };
-            _productHttpService.Setup(x => x.GetProductsByIntegratinoIds(integrationIds)).ReturnsAsync(products);
+            _productsHttpRequestHandler.Setup(x => x.GetProductsByIntegrationIds(integrationIds)).ReturnsAsync(new GetProductsByIntegrationIdQueryResult { Products = products });
             var getShoppingCartByIdQueryHandler = new GetShoppingCartByIdQueryHandler(_context, _mapper);
             var getShoppingCartByIdQuery = new GetShoppingCartByIdQuery()
             {

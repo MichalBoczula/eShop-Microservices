@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
+using Integrations.Products.GetProductsByIntegrationId.Results;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Products.Application.Contracts.Persistance;
 using Products.Application.Features.Common;
-using Products.Application.Features.Queries.GetAllProducts;
 
 namespace Products.Application.Features.Queries.GetProductsByIntegrationId
 {
@@ -20,7 +20,8 @@ namespace Products.Application.Features.Queries.GetProductsByIntegrationId
                 var products = await _context.Products
                     .Where(x => request.ExternalContract.IntegrationIds.Contains(x.IntegrationId))
                     .ToListAsync();
-                var result = this._mapper.Map<List<ProductDto>>(products);
+                var dtos = this._mapper.Map<List<ProductDto>>(products);
+                var result = this._mapper.Map<List<ProductExternal>>(dtos);
                 return new GetProductsByIntegrationIdQueryResult { Products = result, ErrorDescription = null };
             }
             catch (Exception ex)

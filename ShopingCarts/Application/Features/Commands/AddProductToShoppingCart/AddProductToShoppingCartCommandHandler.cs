@@ -5,18 +5,19 @@ using Microsoft.EntityFrameworkCore;
 using ShopingCarts.Application.Contracts;
 using ShopingCarts.Application.Features.Common;
 using ShopingCarts.Domain.Entities;
-using ShopingCarts.ExternalServices.SynchComunication.HttpClients.Abstract;
+using ShopingCarts.ExternalServices.SynchComunication.HttpClients.Concrete.Products;
+using ShopingCarts.ExternalServices.SynchComunication.HttpClients.Products.Abstract;
 
 namespace ShopingCarts.Application.Features.Commands.AddProductToShoppingCart
 {
     internal class AddProductToShoppingCartCommandHandler : CommandBase, IRequestHandler<AddProductToShoppingCartCommand, AddProductToShoppingCartCommandResult>
     {
-        private readonly IProductHttpService _productHttpService;
+        private readonly IProductsHttpRequestHandler _productsHttpRequestHandler;
 
-        public AddProductToShoppingCartCommandHandler(IShoppingCartContext context, IMapper mapper, IProductHttpService productHttpService)
+        public AddProductToShoppingCartCommandHandler(IShoppingCartContext context, IMapper mapper, IProductsHttpRequestHandler productsHttpRequestHandler)
             : base(context, mapper)
         {
-            _productHttpService = productHttpService;
+            _productsHttpRequestHandler = productsHttpRequestHandler;
         }
 
         public async Task<AddProductToShoppingCartCommandResult> Handle(AddProductToShoppingCartCommand request, CancellationToken cancellationToken)
@@ -51,11 +52,11 @@ namespace ShopingCarts.Application.Features.Commands.AddProductToShoppingCart
                             request.ExternalContract.ShoppingCartProductIntegrationId.Value
                         };
 
-                        var products = await this._productHttpService.GetProductsByIntegratinoIds(contract);
+                        var result = await this._productsHttpRequestHandler.GetProductsByIntegrationIds(contract);
 
-                        if (products.Any())
+                        if (result.Products.Any())
                         {
-                            var shoppingCartProduct = this._mapper.Map<ShoppingCartProduct>((request.ExternalContract, products.First()));
+                            var shoppingCartProduct = this._mapper.Map<ShoppingCartProduct>((request.ExternalContract, result.Products.First()));
                           
                             this._context.ShoppingCartProducts.Add(shoppingCartProduct);
                             await this._context.SaveChangesAsync(cancellationToken);

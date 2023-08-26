@@ -6,7 +6,7 @@ using Moq;
 using ShopingCarts.Application.Features.Commands.Checkout;
 using ShopingCarts.Application.Features.Commands.CreateShoppingCart;
 using ShopingCarts.Application.Features.Queries.GetShoppingCartById;
-using ShopingCarts.ExternalServices.SynchComunication.HttpClients.Abstract;
+using ShopingCarts.ExternalServices.SynchComunication.HttpClients.Orders.Abstract;
 using ShopingCarts.Persistance.Context;
 using ShoppingCart.Tests.Common;
 

@@ -1,8 +1,8 @@
 ﻿using Integrations.Orders.Request;
 using Integrations.Orders.Results;
-using ShopingCarts.ExternalServices.SynchComunication.HttpClients.Abstract;
+using ShopingCarts.ExternalServices.SynchComunication.HttpClients.Orders.Abstract;
 
-namespace ShopingCarts.ExternalServices.SynchComunication.HttpClients.Concrete
+namespace ShopingCarts.ExternalServices.SynchComunication.HttpClients.Orders.Concrete
 {
     internal class OrderHttpService : IOrderHttpService
     {

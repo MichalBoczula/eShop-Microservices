@@ -1,4 +1,6 @@
 ﻿using FluentAssertions;
+using Integrations.Products.GetProductsByIntegrationId.Requests;
+using Integrations.Products.GetProductsByIntegrationId.Results;
 using Products.Application.Features.Queries.GetProductsByIntegrationId;
 using Products.IntegrationTests.Common;
 using Products.IntegrationTests.Configuration;

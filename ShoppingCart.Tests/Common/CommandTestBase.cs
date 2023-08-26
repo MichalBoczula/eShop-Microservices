@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
 using Moq;
 using ShopingCarts.Application.Mapping;
-using ShopingCarts.ExternalServices.SynchComunication.HttpClients.Abstract;
+using ShopingCarts.ExternalServices.SynchComunication.HttpClients.Orders.Abstract;
+using ShopingCarts.ExternalServices.SynchComunication.HttpClients.Products.Abstract;
 using ShopingCarts.Persistance.Context;
 
 namespace ShoppingCart.Tests.Common
@@ -9,8 +10,8 @@ namespace ShoppingCart.Tests.Common
     public class CommandTestBase : IDisposable
     {
         internal ShoppingCartContext Context { get; private set; }
-        public IMapper Mapper { get; private set; }
-        internal Mock<IProductHttpService> ProductHttpService { get; private set; }
+        internal IMapper Mapper { get; private set; }
+        internal Mock<IProductsHttpRequestHandler> ProductsHttpRequestHandler { get; private set; }
         internal Mock<IOrderHttpService> OrderHttpService { get; private set; }
 
         public CommandTestBase()
@@ -24,7 +25,7 @@ namespace ShoppingCart.Tests.Common
 
             Mapper = configurationProvider.CreateMapper();
 
-            ProductHttpService = new Mock<IProductHttpService>();
+            ProductsHttpRequestHandler = new Mock<IProductsHttpRequestHandler>();
 
             OrderHttpService = new Mock<IOrderHttpService>();
         }

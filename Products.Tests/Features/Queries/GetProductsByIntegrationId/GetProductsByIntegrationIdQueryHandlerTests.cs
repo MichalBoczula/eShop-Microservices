@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentAssertions;
+using Integrations.Products.GetProductsByIntegrationId.Requests;
 using Products.Application.Features.Queries.GetProductsByIntegrationId;
 using Products.Persistance.Context;
 using Products.Tests.Common;

@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using Integrations.Products.GetProductsByIntegrationId.Requests;
+using Integrations.Products.GetProductsByIntegrationId.Results;
+using MediatR;
 
 namespace Products.Application.Features.Queries.GetProductsByIntegrationId
 {

@@ -1,7 +1,7 @@
 ﻿using Integrations.Orders.Request;
 using Integrations.Orders.Results;
 
-namespace ShopingCarts.ExternalServices.SynchComunication.HttpClients.Abstract
+namespace ShopingCarts.ExternalServices.SynchComunication.HttpClients.Orders.Abstract
 {
     internal interface IOrderHttpService
     {

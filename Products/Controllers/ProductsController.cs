@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Integrations.Products.GetProductsByIntegrationId.Requests;
+using Microsoft.AspNetCore.Mvc;
 using Products.Application.Features.Queries.GetAllProducts;
 using Products.Application.Features.Queries.GetProductsByIntegrationId;
 using Products.Controllers.Base;

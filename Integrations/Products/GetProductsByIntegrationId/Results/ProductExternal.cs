@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Integrations.Products.Results
+namespace Integrations.Products.GetProductsByIntegrationId.Results
 {
-    public class ProductDto
+    public class ProductExternal
     {
         public int Id { get; set; }
         public string Name { get; set; }

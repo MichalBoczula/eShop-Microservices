@@ -1,4 +1,4 @@
-﻿namespace Products.Application.Features.Queries.GetProductsByIntegrationId
+﻿namespace Integrations.Products.GetProductsByIntegrationId.Requests
 {
     public class GetProductsByIntegrationIdQueryExternal
     {

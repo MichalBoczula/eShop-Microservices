@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Integrations.Products.GetProductsByIntegrationId.Results;
+using Products.Application.Features.Queries.GetProductsByIntegrationId;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
@@ -9,7 +11,8 @@ namespace Products.Application.Mapping
     {
         public MappingProfile()
         {
-            ApplyMappingFromAssembly(Assembly.GetExecutingAssembly());
+            this.ApplyMappingFromAssembly(Assembly.GetExecutingAssembly());
+            this.CreateProductExternalForGetProductsByIntegrationId();
         }
 
         private void ApplyMappingFromAssembly(Assembly assembly)
@@ -26,6 +29,11 @@ namespace Products.Application.Mapping
                     var method = t.GetMethod("Mapping");
                     method?.Invoke(instance, new object[] { this });
                 });
+        }
+
+        private void CreateProductExternalForGetProductsByIntegrationId()
+        {
+            CreateMap<ProductDto, ProductExternal>();
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Integrations.Orders.Request;
-using Integrations.Products.Results;
+using Integrations.Products.GetProductsByIntegrationId.Results;
 using ShopingCarts.Application.Features.Commands.AddProductToShoppingCart;
 using ShopingCarts.Domain.Entities;
 using System.Reflection;
@@ -36,7 +36,7 @@ namespace ShopingCarts.Application.Mapping
 
         private void CreateShoppingCartProductForAddProductToShoppingCartCommand()
         {
-            CreateMap<(AddProductToShoppingCartCommandExternal ext, ProductDto prod), ShoppingCartProduct>()
+            CreateMap<(AddProductToShoppingCartCommandExternal ext, ProductExternal prod), ShoppingCartProduct>()
                            .ForMember(d => d.ShoppingCartId, opt => opt.MapFrom(s => s.ext.ShoppingCartId))
                            .ForMember(d => d.Quantity, opt => opt.MapFrom(s => s.ext.ShoppingCartProductQuantity))
                            .ForMember(d => d.ProductIntegrationId, opt => opt.MapFrom(s => s.ext.ShoppingCartProductIntegrationId))
