@@ -1,4 +1,5 @@
-﻿using Integrations.Products.GetProductsByIntegrationId.Requests;
+﻿using Integrations.Common;
+using Integrations.Products.GetProductsByIntegrationId.Requests;
 using Integrations.Products.GetProductsByIntegrationId.Results;
 using ShopingCarts.ExternalServices.SynchComunication.HttpClients.Products.Abstract;
 
@@ -13,9 +14,11 @@ namespace ShopingCarts.ExternalServices.SynchComunication.HttpClients.Concrete.P
             _httpClient = httpClient;
         }
 
-        public async Task<HttpResponseMessage> PostAsJsonAsync(string url, GetProductsByIntegrationIdQueryExternal contract)
+        public async Task<GetProductsByIntegrationIdQueryResult> GetProductsByIntegrationId(string url, GetProductsByIntegrationIdQueryExternal contract)
         {
-            return await _httpClient.PostAsJsonAsync(url, contract);
+            var response = await _httpClient.PostAsJsonAsync(url, contract);
+            var result = await Utilities.GetResponseContent<GetProductsByIntegrationIdQueryResult>(response);
+            return result;
         }
     }
 }

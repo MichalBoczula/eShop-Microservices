@@ -5,6 +5,6 @@ namespace ShopingCarts.ExternalServices.SynchComunication.HttpClients.Products.A
 {
     internal interface IProductHttpService
     {
-        Task<HttpResponseMessage> PostAsJsonAsync(string url, GetProductsByIntegrationIdQueryExternal contract);
+        Task<GetProductsByIntegrationIdQueryResult> GetProductsByIntegrationId(string url, GetProductsByIntegrationIdQueryExternal contract);
     }
 }

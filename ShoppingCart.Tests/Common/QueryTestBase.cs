@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Microsoft.Extensions.Configuration;
 using Moq;
+using NSubstitute.Extensions;
 using ShopingCarts.Application.Mapping;
 using ShopingCarts.ExternalServices.SynchComunication.HttpClients.Products.Abstract;
 using ShopingCarts.Persistance.Context;
@@ -11,6 +13,7 @@ namespace ShoppingCart.Tests.Common
         internal ShoppingCartContext Context { get; private set; }
         internal IMapper Mapper { get; private set; }
         internal Mock<IProductHttpService> ProductHttpService { get; private set; }
+        internal Mock<IConfiguration> Configuration { get; private set; }
 
         public QueryTestBase()
         {
@@ -24,6 +27,7 @@ namespace ShoppingCart.Tests.Common
             Mapper = configurationProvider.CreateMapper();
 
             ProductHttpService = new Mock<IProductHttpService>();
+            Configuration= new Mock<IConfiguration>();
         }
 
         public void Dispose()

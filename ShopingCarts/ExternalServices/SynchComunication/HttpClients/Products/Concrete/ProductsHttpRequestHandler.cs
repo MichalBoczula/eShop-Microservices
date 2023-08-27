@@ -1,8 +1,6 @@
-﻿using Integrations.Common;
-using Integrations.Products.GetProductsByIntegrationId.Requests;
+﻿using Integrations.Products.GetProductsByIntegrationId.Requests;
 using Integrations.Products.GetProductsByIntegrationId.Results;
 using ShopingCarts.ExternalServices.SynchComunication.HttpClients.Products.Abstract;
-using System.Net.Http;
 
 namespace ShopingCarts.ExternalServices.SynchComunication.HttpClients.Concrete.Products
 {
@@ -19,14 +17,19 @@ namespace ShopingCarts.ExternalServices.SynchComunication.HttpClients.Concrete.P
 
         public async Task<GetProductsByIntegrationIdQueryResult> GetProductsByIntegrationIds(List<Guid> integrationIds)
         {
-            var url = this._configuration["ProductsUrl:GetProductsByIntegrationId"];
-            var contract = new GetProductsByIntegrationIdQueryExternal { IntegrationIds = integrationIds };
+            try
+            {
+                var url = this._configuration["ProductsUrl:GetProductsByIntegrationId"];
+                var contract = new GetProductsByIntegrationIdQueryExternal { IntegrationIds = integrationIds };
 
-            var response = await this._productHttpService.PostAsJsonAsync(url, contract);
+                var result = await this._productHttpService.GetProductsByIntegrationId(url, contract);
 
-            var result = await Utilities.GetResponseContent<GetProductsByIntegrationIdQueryResult>(response);
-
-            return result;
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
     }
 }
