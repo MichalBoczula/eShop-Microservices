@@ -2,10 +2,11 @@
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using ShopingCarts.Persistance.Context;
 
-namespace Products.IntegrationTests.Configuration
+namespace ShoppingCarts.IntegrationTests.Configuration
 {
-    public class ProductsWebAppFactory<TEntryPoint> : WebApplicationFactory<Program> where TEntryPoint : Program
+    public class ShoppingCartsWebAppFactory<TEntryPoint> : WebApplicationFactory<Program> where TEntryPoint : Program
     {
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
@@ -13,12 +14,12 @@ namespace Products.IntegrationTests.Configuration
             {
                 var descriptor = services.SingleOrDefault(
                     d => d.ServiceType ==
-                        typeof(DbContextOptions<Products.Persistance.Context.ProductsContext>));
+                        typeof(DbContextOptions<ShoppingCartContext>));
 
                 if (descriptor != null)
                     services.Remove(descriptor);
 
-                services.AddDbContext<Products.Persistance.Context.ProductsContext>(options =>
+                services.AddDbContext<ShoppingCartContext>(options =>
                 {
                     options.UseInMemoryDatabase("InMemoryEmployeeTest");
                 });
@@ -27,7 +28,7 @@ namespace Products.IntegrationTests.Configuration
 
                 using (var scope = sp.CreateScope())
 
-                using (var appContext = scope.ServiceProvider.GetRequiredService<Products.Persistance.Context.ProductsContext>())
+                using (var appContext = scope.ServiceProvider.GetRequiredService<ShoppingCartContext>())
                 {
                     try
                     {

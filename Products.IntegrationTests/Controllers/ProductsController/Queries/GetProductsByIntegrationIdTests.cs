@@ -1,8 +1,7 @@
 ﻿using FluentAssertions;
+using Integrations.Common;
 using Integrations.Products.GetProductsByIntegrationId.Requests;
 using Integrations.Products.GetProductsByIntegrationId.Results;
-using Products.Application.Features.Queries.GetProductsByIntegrationId;
-using Products.IntegrationTests.Common;
 using Products.IntegrationTests.Configuration;
 using System.Net.Http.Json;
 
@@ -36,6 +35,26 @@ namespace Products.IntegrationTests.Controllers.ProductsController.Queries
             response.EnsureSuccessStatusCode();
             var result = await Utilities.GetResponseContent<GetProductsByIntegrationIdQueryResult>(response);
             result.Products.Should().HaveCount(3);
+            result.ErrorDescription.Should().BeNull();
+        }
+
+        [Fact]
+        public async Task ShouldReturnEmptyList()
+        {
+            //arrange
+            var integrationIds = new List<Guid>
+            {
+                new Guid("55CCEE28-E15D-4644-A7BE-2F8A93568D6A"),
+            };
+            var contract = new GetProductsByIntegrationIdQueryExternal { IntegrationIds = integrationIds };
+
+            //act
+            var response = await _client.PostAsJsonAsync("Products/GetProductsByIntegrationId", contract);
+
+            //assert
+            response.EnsureSuccessStatusCode();
+            var result = await Utilities.GetResponseContent<GetProductsByIntegrationIdQueryResult>(response);
+            result.Products.Should().HaveCount(0);
             result.ErrorDescription.Should().BeNull();
         }
     }

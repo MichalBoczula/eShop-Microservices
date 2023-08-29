@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
+using Integrations.Common;
 using Products.Application.Features.Queries.GetAllProducts;
-using Products.IntegrationTests.Common;
 using Products.IntegrationTests.Configuration;
 
 namespace Products.IntegrationTests.Controllers.ProductsController.Queries
