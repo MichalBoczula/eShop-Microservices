@@ -2,7 +2,6 @@
 using Integrations.Common;
 using ShopingCarts.Application.Features.Queries.GetShoppingCartById;
 using ShoppingCarts.IntegrationTests.Configuration;
-using System.Net.Http.Json;
 
 namespace ShoppingCarts.IntegrationTests.Controllers.ShoppingCartsController.Queries
 {
@@ -18,11 +17,8 @@ namespace ShoppingCarts.IntegrationTests.Controllers.ShoppingCartsController.Que
         [Fact]
         public async Task ShouldReturnShoppingCart()
         {
-            //arrange
-            var contract = new GetShoppingCartByIdQueryExternal { ShoppingCartId = 1 };
-
-            //act
-            var response = await _client.PostAsJsonAsync("ShoppingCarts/GetShoppingCartById", contract);
+            //arrange & act
+            var response = await _client.GetAsync("ShoppingCarts/1");
 
             //assert
             response.EnsureSuccessStatusCode();
@@ -35,11 +31,8 @@ namespace ShoppingCarts.IntegrationTests.Controllers.ShoppingCartsController.Que
         [Fact]
         public async Task ShouldReturnErrorMessage()
         {
-            //arrange
-            var contract = new GetShoppingCartByIdQueryExternal { ShoppingCartId = -1 };
-
-            //act
-            var response = await _client.PostAsJsonAsync("ShoppingCarts/GetShoppingCartById", contract);
+            //arrange & act
+            var response = await _client.GetAsync("ShoppingCarts/-1");
 
             //assert
             response.EnsureSuccessStatusCode();

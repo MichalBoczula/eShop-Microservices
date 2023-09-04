@@ -2,6 +2,7 @@
 using Integrations.Common;
 using ShopingCarts.Application.Features.Commands.AddProductToShoppingCart;
 using ShopingCarts.Application.Features.Queries.GetShoppingCartById;
+using ShoppingCarts.IntegrationTests.Common;
 using ShoppingCarts.IntegrationTests.Configuration;
 using System.Net.Http.Json;
 
@@ -37,7 +38,7 @@ namespace ShoppingCarts.IntegrationTests.Controllers.ShoppingCartsController.Com
             result.PositiveMessage.Should().Be("Updated product with Id 1");
             result.ErrorDescription.Should().BeNull();
 
-            var shoppingCart = await this.GetShoppingCartById();
+            var shoppingCart = await Helper.GetShoppingCartById(this._client);
 
             shoppingCart.ShoppingCartDto.Should().NotBeNull();
             shoppingCart.ShoppingCartDto.ShoppingCartProducts
@@ -68,25 +69,12 @@ namespace ShoppingCarts.IntegrationTests.Controllers.ShoppingCartsController.Com
             result.PositiveMessage.Should().Be("Added new product with Id 2");
             result.ErrorDescription.Should().BeNull();
 
-            var shoppingCart = await this.GetShoppingCartById();
+            var shoppingCart = await Helper.GetShoppingCartById(this._client);
 
             shoppingCart.ShoppingCartDto.Should().NotBeNull();
             shoppingCart.ShoppingCartDto.ShoppingCartProducts.Should().HaveCount(2);
             shoppingCart.ErrorDescription.Should().BeNull();
         }
 
-        private async Task<GetShoppingCartByIdQueryResult> GetShoppingCartById()
-        {
-            //arrange
-            var contract = new GetShoppingCartByIdQueryExternal { ShoppingCartId = 1 };
-
-            //act
-            var response = await _client.PostAsJsonAsync("ShoppingCarts/GetShoppingCartById", contract);
-
-            //assert
-            response.EnsureSuccessStatusCode();
-            var result = await Utilities.GetResponseContent<GetShoppingCartByIdQueryResult>(response);
-            return result;
-        }
     }
 }

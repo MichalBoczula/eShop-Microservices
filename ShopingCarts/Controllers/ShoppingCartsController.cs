@@ -9,12 +9,15 @@ namespace ShopingCarts.Controllers
     [Route("[controller]")]
     public class ShoppingCartsController : BaseController
     {
-        [HttpPost("GetShoppingCartById")]
-        public async Task<ActionResult> GetShoppingCartById([FromBody] GetShoppingCartByIdQueryExternal contract)
+        [HttpGet("{shoppingCartId}")]
+        public async Task<ActionResult> GetShoppingCartById(int shoppingCartId)
         {
             var result = await Mediator.Send(new GetShoppingCartByIdQuery()
             {
-                ExternalContract = contract
+                ExternalContract = new GetShoppingCartByIdQueryExternal
+                {
+                    ShoppingCartId = shoppingCartId
+                }
             });
             return Ok(result);
         }
