@@ -23,13 +23,12 @@ namespace ShoppingCarts.IntegrationTests.Controllers.ShoppingCartsController.Com
             //arrange
             var contractAdd = new AddProductToShoppingCartCommandExternal
             {
-                ShoppingCartId = 1,
                 ShoppingCartProductId = 1,
                 ShoppingCartProductQuantity = 1
             };
 
             //act
-            var responseAdd = await _client.PostAsJsonAsync("ShoppingCarts/AddProductToShoppingCart", contractAdd);
+            var responseAdd = await _client.PostAsJsonAsync("ShoppingCarts/1", contractAdd);
 
             //assert 
             responseAdd.EnsureSuccessStatusCode();
@@ -53,14 +52,13 @@ namespace ShoppingCarts.IntegrationTests.Controllers.ShoppingCartsController.Com
             //arrange
             var contract = new AddProductToShoppingCartCommandExternal
             {
-                ShoppingCartId = 1,
                 ShoppingCartProductIntegrationId = new Guid("23363AFF-DD71-4F3C-8381-F7E71021761E"),
                 ShoppingCartProductQuantity = 1
             };
             var contractGet = new GetShoppingCartByIdQueryExternal { ShoppingCartId = 1 };
 
             //act
-            var responseAdd = await _client.PostAsJsonAsync("ShoppingCarts/AddProductToShoppingCart", contract);
+            var responseAdd = await _client.PostAsJsonAsync("ShoppingCarts/1", contract);
 
             //assert
             responseAdd.EnsureSuccessStatusCode();

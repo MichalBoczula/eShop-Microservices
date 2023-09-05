@@ -22,17 +22,18 @@ namespace ShopingCarts.Controllers
             return Ok(result);
         }
 
-        [HttpPost("AddProductToShoppingCart")]
-        public async Task<ActionResult> GetShoppingCartById([FromBody] AddProductToShoppingCartCommandExternal contract)
+        [HttpPost("{shoppingCartId}")]
+        public async Task<ActionResult> GetShoppingCartById(int shoppingCartId, [FromBody] AddProductToShoppingCartCommandExternal contract)
         {
             var result = await Mediator.Send(new AddProductToShoppingCartCommand()
             {
+                ShoppingCartId = shoppingCartId,
                 ExternalContract = contract
             });
             return Ok(result);
         }
 
-        [HttpDelete("RemoveProductFromShoppingCart")]
+        [HttpDelete("{shoppingCartId}")]
         public async Task<ActionResult> GetShoppingCartById([FromBody] RemoveProductFromShoppingCartCommandExternal contract)
         {
             var result = await Mediator.Send(new RemoveProductFromShoppingCartCommand()

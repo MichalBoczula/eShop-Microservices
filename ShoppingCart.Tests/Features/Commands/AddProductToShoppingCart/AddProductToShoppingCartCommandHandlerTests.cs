@@ -32,9 +32,9 @@ namespace ShoppingCart.Tests.Features.Commands.AddProductToShoppingCart
             var handler = new AddProductToShoppingCartCommandHandler(_context, _mapper, _productsHttpRequestHandler.Object);
             var query = new AddProductToShoppingCartCommand()
             {
+                ShoppingCartId = 1,
                 ExternalContract = new AddProductToShoppingCartCommandExternal
                 {
-                    ShoppingCartId = 1,
                     ShoppingCartProductId = 1,
                     ShoppingCartProductQuantity = 1
                 }
@@ -68,9 +68,9 @@ namespace ShoppingCart.Tests.Features.Commands.AddProductToShoppingCart
             var handler = new AddProductToShoppingCartCommandHandler(_context, _mapper, _productsHttpRequestHandler.Object);
             var query = new AddProductToShoppingCartCommand()
             {
+                ShoppingCartId = 1,
                 ExternalContract = new AddProductToShoppingCartCommandExternal
                 {
-                    ShoppingCartId = 1,
                     ShoppingCartProductId = 10,
                     ShoppingCartProductQuantity = 1
                 }
@@ -115,9 +115,9 @@ namespace ShoppingCart.Tests.Features.Commands.AddProductToShoppingCart
             var handler = new AddProductToShoppingCartCommandHandler(_context, _mapper, _productsHttpRequestHandler.Object);
             var query = new AddProductToShoppingCartCommand()
             {
+                ShoppingCartId = 1,
                 ExternalContract = new AddProductToShoppingCartCommandExternal
                 {
-                    ShoppingCartId = 1,
                     ShoppingCartProductIntegrationId = integrationId,
                     ShoppingCartProductQuantity = 1
                 }
@@ -154,9 +154,9 @@ namespace ShoppingCart.Tests.Features.Commands.AddProductToShoppingCart
             var handler = new AddProductToShoppingCartCommandHandler(_context, _mapper, _productsHttpRequestHandler.Object);
             var query = new AddProductToShoppingCartCommand()
             {
+                ShoppingCartId = 1,
                 ExternalContract = new AddProductToShoppingCartCommandExternal
                 {
-                    ShoppingCartId = 1,
                     ShoppingCartProductIntegrationId = integrationId,
                     ShoppingCartProductQuantity = 1
                 }

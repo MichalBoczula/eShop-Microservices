@@ -50,9 +50,9 @@ namespace ShoppingCart.Tests.Features.Commands.RemoveProductFromShoppingCart
             var addProductToShoppingCartCommandHandler = new AddProductToShoppingCartCommandHandler(_context, _mapper, _productsHttpRequestHandler.Object);
             var addProductToShoppingCartCommand = new AddProductToShoppingCartCommand()
             {
+                ShoppingCartId = 1,
                 ExternalContract = new AddProductToShoppingCartCommandExternal
                 {
-                    ShoppingCartId = 1,
                     ShoppingCartProductId = 1,
                     ShoppingCartProductQuantity = 1
                 }
@@ -147,9 +147,9 @@ namespace ShoppingCart.Tests.Features.Commands.RemoveProductFromShoppingCart
             var addProductToShoppingCartCommandHandler = new AddProductToShoppingCartCommandHandler(_context, _mapper, _productsHttpRequestHandler.Object);
             var addProductToShoppingCartCommand = new AddProductToShoppingCartCommand()
             {
+                ShoppingCartId = 1,
                 ExternalContract = new AddProductToShoppingCartCommandExternal
                 {
-                    ShoppingCartId = 1,
                     ShoppingCartProductId = 1,
                     ShoppingCartProductQuantity = 1
                 }

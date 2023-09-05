@@ -7,11 +7,8 @@ namespace ShoppingCarts.IntegrationTests.Common
     {
         public static async Task<GetShoppingCartByIdQueryResult> GetShoppingCartById(HttpClient client)
         {
-            //arrange
-            var contract = new GetShoppingCartByIdQueryExternal { ShoppingCartId = 1 };
-
-            //act
-            var response = await client.PostAsJsonAsync("ShoppingCarts/GetShoppingCartById", contract);
+            //arrange & act
+            var response = await client.GetAsync("ShoppingCarts/1");
 
             //assert
             response.EnsureSuccessStatusCode();

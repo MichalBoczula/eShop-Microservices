@@ -26,7 +26,7 @@ namespace ShopingCarts.Application.Features.Commands.AddProductToShoppingCart
             {
                 var shoppingCart = await this._context.ShoppingCarts
                .Include(x => x.ShoppingCartProducts)
-               .FirstOrDefaultAsync(x => x.Id == request.ExternalContract.ShoppingCartId, cancellationToken);
+               .FirstOrDefaultAsync(x => x.Id == request.ShoppingCartId, cancellationToken);
 
                 if (shoppingCart.ShoppingCartProducts.Any(x => x.Id == request.ExternalContract.ShoppingCartProductId))
                 {
@@ -56,7 +56,7 @@ namespace ShopingCarts.Application.Features.Commands.AddProductToShoppingCart
 
                         if (result.Products.Any())
                         {
-                            var shoppingCartProduct = this._mapper.Map<ShoppingCartProduct>((request.ExternalContract, result.Products.First()));
+                            var shoppingCartProduct = this._mapper.Map<ShoppingCartProduct>((request.ShoppingCartId, request.ExternalContract, result.Products.First()));
                           
                             this._context.ShoppingCartProducts.Add(shoppingCartProduct);
                             await this._context.SaveChangesAsync(cancellationToken);

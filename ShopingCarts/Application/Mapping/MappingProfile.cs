@@ -36,8 +36,8 @@ namespace ShopingCarts.Application.Mapping
 
         private void CreateShoppingCartProductForAddProductToShoppingCartCommand()
         {
-            CreateMap<(AddProductToShoppingCartCommandExternal ext, ProductExternal prod), ShoppingCartProduct>()
-                           .ForMember(d => d.ShoppingCartId, opt => opt.MapFrom(s => s.ext.ShoppingCartId))
+            CreateMap<(int shoppingCartId, AddProductToShoppingCartCommandExternal ext, ProductExternal prod), ShoppingCartProduct>()
+                           .ForMember(d => d.ShoppingCartId, opt => opt.MapFrom(s => s.shoppingCartId))
                            .ForMember(d => d.Quantity, opt => opt.MapFrom(s => s.ext.ShoppingCartProductQuantity))
                            .ForMember(d => d.ProductIntegrationId, opt => opt.MapFrom(s => s.ext.ShoppingCartProductIntegrationId))
                            .ForMember(d => d.Total, opt => opt.MapFrom(s => s.ext.ShoppingCartProductQuantity * s.prod.Price))
