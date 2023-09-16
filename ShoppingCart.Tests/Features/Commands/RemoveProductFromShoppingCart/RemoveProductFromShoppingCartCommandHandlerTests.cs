@@ -32,12 +32,8 @@ namespace ShoppingCart.Tests.Features.Commands.RemoveProductFromShoppingCart
             var handler = new RemoveProductFromShoppingCartCommandHandler(_context, _mapper);
             var query = new RemoveProductFromShoppingCartCommand()
             {
-                ExternalContract = new RemoveProductFromShoppingCartCommandExternal
-                {
-                    ShoppingCartId = 1,
-                    ShoppingCartProductId = 1,
-                    ShoppingCartProductQuantity = 2
-                }
+                ShoppingCartId = 1,
+                ShoppingCartProductId = 1,
             };
             var getShoppingCartByIdQueryHandler = new GetShoppingCartByIdQueryHandler(_context, _mapper);
             var getShoppingCartByIdQuery = new GetShoppingCartByIdQuery()
@@ -68,7 +64,8 @@ namespace ShoppingCart.Tests.Features.Commands.RemoveProductFromShoppingCart
             result.PositiveMessage.Should().Be("Successfullyy removed with id 1 product from shoppingCart identify by 1");
             result.ErrorDescription.Should().BeNull();
             var shoppingCart = await getShoppingCartByIdQueryHandler.Handle(getShoppingCartByIdQuery, CancellationToken.None);
-            shoppingCart.ShoppingCartDto.ShoppingCartProducts.Should().HaveCount(0);
+            shoppingCart.ShoppingCartDto.ShoppingCartProducts.Should().HaveCount(1);
+            shoppingCart.ShoppingCartDto.Total.Should().Be(3000);
 
         }
 
@@ -79,12 +76,8 @@ namespace ShoppingCart.Tests.Features.Commands.RemoveProductFromShoppingCart
             var handler = new RemoveProductFromShoppingCartCommandHandler(_context, _mapper);
             var query = new RemoveProductFromShoppingCartCommand()
             {
-                ExternalContract = new RemoveProductFromShoppingCartCommandExternal
-                {
-                    ShoppingCartId = 111,
-                    ShoppingCartProductId = 1,
-                    ShoppingCartProductQuantity = 1
-                }
+                ShoppingCartId = 111,
+                ShoppingCartProductId = 1,
             };
             //act
             var result = await handler.Handle(
@@ -104,12 +97,8 @@ namespace ShoppingCart.Tests.Features.Commands.RemoveProductFromShoppingCart
             var handler = new RemoveProductFromShoppingCartCommandHandler(_context, _mapper);
             var query = new RemoveProductFromShoppingCartCommand()
             {
-                ExternalContract = new RemoveProductFromShoppingCartCommandExternal
-                {
-                    ShoppingCartId = 1,
-                    ShoppingCartProductId = 10,
-                    ShoppingCartProductQuantity = 1
-                }
+                ShoppingCartId = 1,
+                ShoppingCartProductId = 10,
             };
             //act
             var result = await handler.Handle(
@@ -129,12 +118,8 @@ namespace ShoppingCart.Tests.Features.Commands.RemoveProductFromShoppingCart
             var handler = new RemoveProductFromShoppingCartCommandHandler(_context, _mapper);
             var query = new RemoveProductFromShoppingCartCommand()
             {
-                ExternalContract = new RemoveProductFromShoppingCartCommandExternal
-                {
-                    ShoppingCartId = 1,
-                    ShoppingCartProductId = 1,
-                    ShoppingCartProductQuantity = 1
-                }
+                ShoppingCartId = 1,
+                ShoppingCartProductId = 1,
             };
             var getShoppingCartByIdQueryHandler = new GetShoppingCartByIdQueryHandler(_context, _mapper);
             var getShoppingCartByIdQuery = new GetShoppingCartByIdQuery()
@@ -167,6 +152,7 @@ namespace ShoppingCart.Tests.Features.Commands.RemoveProductFromShoppingCart
             var shoppingCart = await getShoppingCartByIdQueryHandler.Handle(getShoppingCartByIdQuery, CancellationToken.None);
             shoppingCart.ShoppingCartDto.ShoppingCartProducts.Should().HaveCount(1);
             shoppingCart.ShoppingCartDto.ShoppingCartProducts.First().Quantity.Should().Be(1);
+            shoppingCart.ShoppingCartDto.Total.Should().Be(3000);
         }
     }
 }

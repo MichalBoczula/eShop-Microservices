@@ -33,12 +33,14 @@ namespace ShopingCarts.Controllers
             return Ok(result);
         }
 
-        [HttpDelete("{shoppingCartId}")]
-        public async Task<ActionResult> GetShoppingCartById([FromBody] RemoveProductFromShoppingCartCommandExternal contract)
+        [HttpDelete("{shoppingCartId}/Products/{productId}")]
+        public async Task<ActionResult> GetShoppingCartById(int shoppingCartId, int productId)
         {
             var result = await Mediator.Send(new RemoveProductFromShoppingCartCommand()
             {
-                ExternalContract = contract
+                ShoppingCartId  = shoppingCartId,
+                ShoppingCartProductId = productId
+
             });
             return Ok(result);
         }

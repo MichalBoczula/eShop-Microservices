@@ -20,7 +20,7 @@ namespace Products.IntegrationTests.Configuration
 
                 services.AddDbContext<Products.Persistance.Context.ProductsContext>(options =>
                 {
-                    options.UseInMemoryDatabase("InMemoryEmployeeTest");
+                    options.UseInMemoryDatabase("InMemoryProductTest");
                 });
 
                 var sp = services.BuildServiceProvider();

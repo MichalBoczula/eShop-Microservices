@@ -8,11 +8,11 @@ using System.Net.Http.Json;
 
 namespace ShoppingCarts.IntegrationTests.Controllers.ShoppingCartsController.Commands
 {
-    public class AddProductToShoppingCartTests : IClassFixture<ShoppingCartsWebAppFactory<Program>>
+    public class AddProductToShoppingCartTests : IClassFixture<ShoppingCartsWebAppFactoryForAddProducts<Program>>
     {
         private readonly HttpClient _client;
 
-        public AddProductToShoppingCartTests(ShoppingCartsWebAppFactory<Program> factory)
+        public AddProductToShoppingCartTests(ShoppingCartsWebAppFactoryForAddProducts<Program> factory)
         {
             this._client = factory.CreateClient();
         }
@@ -64,7 +64,7 @@ namespace ShoppingCarts.IntegrationTests.Controllers.ShoppingCartsController.Com
             responseAdd.EnsureSuccessStatusCode();
             var result = await Utilities.GetResponseContent<AddProductToShoppingCartCommandResult>(responseAdd);
             result.PositiveMessage.Should().NotBeNull();
-            result.PositiveMessage.Should().Be("Added new product with Id 2");
+            result.PositiveMessage.Should().Be("Added new product with Id 12");
             result.ErrorDescription.Should().BeNull();
 
             var shoppingCart = await Helper.GetShoppingCartById(this._client);

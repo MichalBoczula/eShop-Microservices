@@ -4,7 +4,6 @@ using Integrations.Products.GetProductsByIntegrationId.Results;
 using Moq;
 using ShopingCarts.Application.Features.Commands.AddProductToShoppingCart;
 using ShopingCarts.Application.Features.Queries.GetShoppingCartById;
-using ShopingCarts.Domain.Entities;
 using ShopingCarts.ExternalServices.SynchComunication.HttpClients.Products.Abstract;
 using ShopingCarts.Persistance.Context;
 using ShoppingCart.Tests.Common;
@@ -59,6 +58,7 @@ namespace ShoppingCart.Tests.Features.Commands.AddProductToShoppingCart
             var shoppingCart = await getShoppingCartByIdQueryHandler.Handle(getShoppingCartByIdQuery, CancellationToken.None);
             shoppingCart.ShoppingCartDto.ShoppingCartProducts.Should().HaveCount(1);
             shoppingCart.ShoppingCartDto.ShoppingCartProducts.First().Quantity.Should().Be(2);
+            shoppingCart.ShoppingCartDto.Total.Should().Be(6000);
         }
 
         [Fact]
@@ -94,6 +94,7 @@ namespace ShoppingCart.Tests.Features.Commands.AddProductToShoppingCart
             result.ErrorDescription.Should().Be("Product doesn't exist");
             var shoppingCart = await getShoppingCartByIdQueryHandler.Handle(getShoppingCartByIdQuery, CancellationToken.None);
             shoppingCart.ShoppingCartDto.ShoppingCartProducts.Should().HaveCount(1);
+            shoppingCart.ShoppingCartDto.Total.Should().Be(3000);
         }
 
         [Fact]
@@ -122,7 +123,7 @@ namespace ShoppingCart.Tests.Features.Commands.AddProductToShoppingCart
                     ShoppingCartProductQuantity = 1
                 }
             };
-            _productsHttpRequestHandler.Setup(x => x.GetProductsByIntegrationIds(integrationIds)).ReturnsAsync(new GetProductsByIntegrationIdQueryResult { Products = products } );
+            _productsHttpRequestHandler.Setup(x => x.GetProductsByIntegrationIds(integrationIds)).ReturnsAsync(new GetProductsByIntegrationIdQueryResult { Products = products });
             var getShoppingCartByIdQueryHandler = new GetShoppingCartByIdQueryHandler(_context, _mapper);
             var getShoppingCartByIdQuery = new GetShoppingCartByIdQuery()
             {
@@ -142,6 +143,7 @@ namespace ShoppingCart.Tests.Features.Commands.AddProductToShoppingCart
             result.ErrorDescription.Should().BeNull();
             var shoppingCart = await getShoppingCartByIdQueryHandler.Handle(getShoppingCartByIdQuery, CancellationToken.None);
             shoppingCart.ShoppingCartDto.ShoppingCartProducts.Should().HaveCount(2);
+            shoppingCart.ShoppingCartDto.Total.Should().Be(6000);
         }
 
         [Fact]
@@ -181,6 +183,7 @@ namespace ShoppingCart.Tests.Features.Commands.AddProductToShoppingCart
             result.ErrorDescription.Should().Be("Product doesn't exist");
             var shoppingCart = await getShoppingCartByIdQueryHandler.Handle(getShoppingCartByIdQuery, CancellationToken.None);
             shoppingCart.ShoppingCartDto.ShoppingCartProducts.Should().HaveCount(1);
+            shoppingCart.ShoppingCartDto.Total.Should().Be(6000);
         }
     }
 }

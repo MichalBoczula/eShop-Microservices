@@ -19,7 +19,7 @@ namespace ShopingCarts.Application.Features.Commands.RemoveProductFromShoppingCa
             try
             {
                 var shoppingCart = this._context.ShoppingCarts
-                    .Where(x => x.Id == request.ExternalContract.ShoppingCartId)
+                    .Where(x => x.Id == request.ShoppingCartId)
                     .Include(x => x.ShoppingCartProducts)
                     .FirstOrDefault();
 
@@ -28,31 +28,32 @@ namespace ShopingCarts.Application.Features.Commands.RemoveProductFromShoppingCa
                     return new RemoveProductFromShoppingCartCommandResult()
                     {
                         PositiveMessage = null,
-                        ErrorDescription = $"Shopping cart identify by id {request.ExternalContract.ShoppingCartId} doesn't exist"
+                        ErrorDescription = $"Shopping cart identify by id {request.ShoppingCartId} doesn't exist"
                     };
                 }
 
-                var shoppingCartProductToRemove = shoppingCart.ShoppingCartProducts.FirstOrDefault(x => x.Id == request.ExternalContract.ShoppingCartProductId);
+                var shoppingCartProductToRemove = shoppingCart.ShoppingCartProducts.FirstOrDefault(x => x.Id == request.ShoppingCartProductId);
 
                 if (shoppingCartProductToRemove != null)
                 {
-                    if (shoppingCartProductToRemove.Quantity <= request.ExternalContract.ShoppingCartProductQuantity)
+                    if (shoppingCartProductToRemove.Quantity == 1)
                     {
                         shoppingCart.ShoppingCartProducts.Remove(shoppingCartProductToRemove);
                         this._context.ShoppingCarts.Update(shoppingCart);
                     }
                     else
                     {
-                        shoppingCartProductToRemove.Quantity -= request.ExternalContract.ShoppingCartProductQuantity;
+                        shoppingCartProductToRemove.Quantity -= 1;
                         this._context.ShoppingCartProducts.Update(shoppingCartProductToRemove);
                     }
 
-                    var result = await this._context.SaveChangesAsync(cancellationToken);
+                    shoppingCart.Total = shoppingCart.ShoppingCartProducts.Aggregate(0, (total, prod) => total = prod.Price * prod.Quantity);
 
+                    var result = await this._context.SaveChangesAsync(cancellationToken);
 
                     return new RemoveProductFromShoppingCartCommandResult()
                     {
-                        PositiveMessage = $"Successfullyy removed with id {request.ExternalContract.ShoppingCartProductId} product from shoppingCart identify by {request.ExternalContract.ShoppingCartId}",
+                        PositiveMessage = $"Successfullyy removed with id {request.ShoppingCartProductId} product from shoppingCart identify by {request.ShoppingCartId}",
                         ErrorDescription = null
                     };
                         
@@ -62,7 +63,7 @@ namespace ShopingCarts.Application.Features.Commands.RemoveProductFromShoppingCa
                     return new RemoveProductFromShoppingCartCommandResult()
                     {
                         PositiveMessage = null,
-                        ErrorDescription = $"Product identify by id {request.ExternalContract.ShoppingCartProductId} doesn't exist in shoppingCart identify by {request.ExternalContract.ShoppingCartId}"
+                        ErrorDescription = $"Product identify by id {request.ShoppingCartProductId} doesn't exist in shoppingCart identify by {request.ShoppingCartId}"
                     };
                 }
             }
@@ -71,7 +72,7 @@ namespace ShopingCarts.Application.Features.Commands.RemoveProductFromShoppingCa
                 return new RemoveProductFromShoppingCartCommandResult()
                 {
                     PositiveMessage = null,
-                    ErrorDescription = $"Error wit message '{ex.Message}' occured during removing process for product idnetify by id {request.ExternalContract.ShoppingCartProductId}"
+                    ErrorDescription = $"Error wit message '{ex.Message}' occured during removing process for product idnetify by id {request.ShoppingCartProductId}"
                 };
             }
         }

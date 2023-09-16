@@ -30,7 +30,7 @@ namespace ShopingCarts.Persistance.Seed
                    Id = 1,
                    ProductIntegrationId = new Guid("0EF1268E-33D6-49CD-A4B5-8EB94494D896"),
                    Quantity = 1,
-                   Total = 3000,
+                   Price = 3000,
                    ShoppingCartId = 1,
                }
            );

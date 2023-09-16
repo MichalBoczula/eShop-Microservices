@@ -5,11 +5,11 @@ using ShoppingCarts.IntegrationTests.Configuration;
 
 namespace ShoppingCarts.IntegrationTests.Controllers.ShoppingCartsController.Queries
 {
-    public class ShoppingCartsControllerTests : IClassFixture<ShoppingCartsWebAppFactory<Program>>
+    public class ShoppingCartsControllerTests : IClassFixture<ShoppingCartsWebAppFactoryForAddProducts<Program>>
     {
         private readonly HttpClient _client;
 
-        public ShoppingCartsControllerTests(ShoppingCartsWebAppFactory<Program> factory)
+        public ShoppingCartsControllerTests(ShoppingCartsWebAppFactoryForAddProducts<Program> factory)
         {
             this._client = factory.CreateClient();
         }

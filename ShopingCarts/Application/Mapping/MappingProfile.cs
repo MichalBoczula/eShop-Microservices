@@ -40,7 +40,7 @@ namespace ShopingCarts.Application.Mapping
                            .ForMember(d => d.ShoppingCartId, opt => opt.MapFrom(s => s.shoppingCartId))
                            .ForMember(d => d.Quantity, opt => opt.MapFrom(s => s.ext.ShoppingCartProductQuantity))
                            .ForMember(d => d.ProductIntegrationId, opt => opt.MapFrom(s => s.ext.ShoppingCartProductIntegrationId))
-                           .ForMember(d => d.Total, opt => opt.MapFrom(s => s.ext.ShoppingCartProductQuantity * s.prod.Price))
+                           .ForMember(d => d.Price, opt => opt.MapFrom(s => s.ext.ShoppingCartProductQuantity * s.prod.Price))
                            .ForMember(d => d.Id, opt => opt.Ignore())
                            .ForMember(d => d.ShoppingCartRef, opt => opt.Ignore());
         }

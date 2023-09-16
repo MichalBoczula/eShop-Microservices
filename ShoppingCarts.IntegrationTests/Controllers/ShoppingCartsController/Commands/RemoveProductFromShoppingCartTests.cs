@@ -10,11 +10,11 @@ using System.Text;
 
 namespace ShoppingCarts.IntegrationTests.Controllers.ShoppingCartsController.Commands
 {
-    public class RemoveProductFromShoppingCartTests : IClassFixture<ShoppingCartsWebAppFactory<Program>>
+    public class RemoveProductFromShoppingCartTests : IClassFixture<ShoppingCartsWebAppFactoryForRemoveProducts<Program>>
     {
         private readonly HttpClient _client;
 
-        public RemoveProductFromShoppingCartTests(ShoppingCartsWebAppFactory<Program> factory)
+        public RemoveProductFromShoppingCartTests(ShoppingCartsWebAppFactoryForRemoveProducts<Program> factory)
         {
             this._client = factory.CreateClient();
         }
@@ -22,33 +22,21 @@ namespace ShoppingCarts.IntegrationTests.Controllers.ShoppingCartsController.Com
         [Fact]
         public async Task ShouldReduceQuantityOfProductsFromShoppingCart()
         {
-            //arrange
-            var contractAdd = new RemoveProductFromShoppingCartCommandExternal
-            {
-                ShoppingCartId = 1,
-                ShoppingCartProductId = 1,
-                ShoppingCartProductQuantity = 1
-            };
-
-            //act
-            var request = new HttpRequestMessage(HttpMethod.Delete, "ShoppingCarts/RemoveProductFromShoppingCart");
-            request.Content = new StringContent(JsonConvert.SerializeObject(contractAdd));
-            var response = await this._client.SendAsync(request);
-            //var responseAdd = await _client.DeleteAsync("ShoppingCarts/RemoveProductFromShoppingCart", contractAdd);
+            //arrange & act
+            var response = await _client.DeleteAsync("ShoppingCarts/2/Products/11");
 
             //assert 
             response.EnsureSuccessStatusCode();
             var result = await Utilities.GetResponseContent<RemoveProductFromShoppingCartCommandResult>(response);
             result.PositiveMessage.Should().NotBeNull();
-            result.PositiveMessage.Should().Be("Updated product with Id 1");
+            result.PositiveMessage.Should().Be("Successfullyy removed with id 11 product from shoppingCart identify by 2");
             result.ErrorDescription.Should().BeNull();
 
             var shoppingCart = await Helper.GetShoppingCartById(this._client);
 
             shoppingCart.ShoppingCartDto.Should().NotBeNull();
-            shoppingCart.ShoppingCartDto.ShoppingCartProducts
-                .First(x => x.ProductIntegrationId == new Guid("0ef1268e-33d6-49cd-a4b5-8eb94494d896")).Quantity
-                .Should().Be(2);
+            shoppingCart.ShoppingCartDto.Total.Should().Be(3000);
+            shoppingCart.ShoppingCartDto.ShoppingCartProducts.Should().HaveCount(1);
             shoppingCart.ErrorDescription.Should().BeNull();
         }
     }

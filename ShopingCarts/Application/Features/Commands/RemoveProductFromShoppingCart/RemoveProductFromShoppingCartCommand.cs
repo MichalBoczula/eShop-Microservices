@@ -4,6 +4,7 @@ namespace ShopingCarts.Application.Features.Commands.RemoveProductFromShoppingCa
 {
     internal class RemoveProductFromShoppingCartCommand : IRequest<RemoveProductFromShoppingCartCommandResult>
     {
-        public RemoveProductFromShoppingCartCommandExternal ExternalContract { get; set; }
+        public int ShoppingCartId { get; set; }
+        public int ShoppingCartProductId { get; set; }
     }
 }

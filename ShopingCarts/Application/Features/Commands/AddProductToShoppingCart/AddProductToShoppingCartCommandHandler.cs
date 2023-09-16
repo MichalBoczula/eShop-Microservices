@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using ShopingCarts.Application.Contracts;
 using ShopingCarts.Application.Features.Common;
 using ShopingCarts.Domain.Entities;
-using ShopingCarts.ExternalServices.SynchComunication.HttpClients.Concrete.Products;
 using ShopingCarts.ExternalServices.SynchComunication.HttpClients.Products.Abstract;
 
 namespace ShopingCarts.Application.Features.Commands.AddProductToShoppingCart
@@ -34,6 +33,8 @@ namespace ShopingCarts.Application.Features.Commands.AddProductToShoppingCart
                         .First(x => x.Id == request.ExternalContract.ShoppingCartProductId);
                     product.Quantity += request.ExternalContract.ShoppingCartProductQuantity;
 
+                    shoppingCart.Total = shoppingCart.ShoppingCartProducts.Aggregate(0, (total, prod) => total = prod.Price * prod.Quantity);
+
                     this._context.ShoppingCartProducts.Update(product);
                     await this._context.SaveChangesAsync(cancellationToken);
 
@@ -57,7 +58,7 @@ namespace ShopingCarts.Application.Features.Commands.AddProductToShoppingCart
                         if (result.Products.Any())
                         {
                             var shoppingCartProduct = this._mapper.Map<ShoppingCartProduct>((request.ShoppingCartId, request.ExternalContract, result.Products.First()));
-                          
+
                             this._context.ShoppingCartProducts.Add(shoppingCartProduct);
                             await this._context.SaveChangesAsync(cancellationToken);
 

@@ -15,7 +15,7 @@ namespace Orders.Persistance.Configuration
                 .WithMany(x => x.OrderProducts)
                 .HasForeignKey(x => x.OrderId);
             builder.Property(x => x.Quantity).IsRequired();
-            builder.Property(x => x.Total).IsRequired();
+            builder.Property(x => x.Price).IsRequired();
         }
     }
 }

@@ -52,7 +52,7 @@ namespace Orders.Persistance.Migrations
                         new
                         {
                             Id = 1,
-                            IntegrationId = new Guid("76e33392-3fa9-44f4-93e0-cf09c299c7ca"),
+                            IntegrationId = new Guid("17419f95-733e-4c34-99f5-8ae66d6f50ef"),
                             Total = 2000,
                             UserId = 1
                         });
@@ -69,13 +69,13 @@ namespace Orders.Persistance.Migrations
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
 
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
                     b.Property<Guid>("ProductIntegrationId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Total")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -92,9 +92,9 @@ namespace Orders.Persistance.Migrations
                         {
                             Id = 1,
                             OrderId = 1,
+                            Price = 2000,
                             ProductIntegrationId = new Guid("55ccee28-e15d-4644-a7be-2f8a93568d6f"),
-                            Quantity = 1,
-                            Total = 2000
+                            Quantity = 1
                         });
                 });
 

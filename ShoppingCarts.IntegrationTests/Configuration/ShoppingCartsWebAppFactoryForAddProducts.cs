@@ -6,7 +6,7 @@ using ShopingCarts.Persistance.Context;
 
 namespace ShoppingCarts.IntegrationTests.Configuration
 {
-    public class ShoppingCartsWebAppFactory<TEntryPoint> : WebApplicationFactory<Program> where TEntryPoint : Program
+    public class ShoppingCartsWebAppFactoryForAddProducts<TEntryPoint> : WebApplicationFactory<Program> where TEntryPoint : Program
     {
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
@@ -21,7 +21,7 @@ namespace ShoppingCarts.IntegrationTests.Configuration
 
                 services.AddDbContext<ShoppingCartContext>(options =>
                 {
-                    options.UseInMemoryDatabase("InMemoryEmployeeTest");
+                    options.UseInMemoryDatabase("InMemoryAddProductTest");
                 });
 
                 var sp = services.BuildServiceProvider();

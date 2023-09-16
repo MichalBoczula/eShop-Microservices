@@ -29,7 +29,7 @@ namespace Orders.Persistance.Seed
                    Id = 1,
                    ProductIntegrationId = new Guid("55CCEE28-E15D-4644-A7BE-2F8A93568D6F"),
                    Quantity = 1,
-                   Total = 2000,
+                   Price = 2000,
                    OrderId = 1,
                }
            );

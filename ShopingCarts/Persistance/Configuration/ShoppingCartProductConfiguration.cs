@@ -14,7 +14,7 @@ namespace ShopingCarts.Persistance.Configuration
                 .HasForeignKey(x => x.ShoppingCartId);
             builder.Property(x => x.ShoppingCartId).IsRequired();
             builder.Property(x => x.Quantity).IsRequired();
-            builder.Property(x => x.Total).IsRequired();
+            builder.Property(x => x.Price).IsRequired();
             builder.Property(x => x.ProductIntegrationId).IsRequired();
         }
     }
