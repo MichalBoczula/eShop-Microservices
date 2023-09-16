@@ -39,5 +39,19 @@ namespace ShoppingCarts.IntegrationTests.Controllers.ShoppingCartsController.Com
             shoppingCart.ShoppingCartDto.ShoppingCartProducts.Should().HaveCount(1);
             shoppingCart.ErrorDescription.Should().BeNull();
         }
+
+        [Fact]
+        public async Task ShouldReturnErrorMessage()
+        {
+            //arrange & act
+            var response = await _client.DeleteAsync("ShoppingCarts/2/Products/22");
+
+            //assert 
+            response.EnsureSuccessStatusCode();
+            var result = await Utilities.GetResponseContent<RemoveProductFromShoppingCartCommandResult>(response);
+            result.PositiveMessage.Should().BeNull();
+            result.ErrorDescription.Should().NotBeNull();
+            result.ErrorDescription.Should().Be("Product identify by id 22 doesn't exist in shoppingCart identify by 2");
+        }
     }
 }

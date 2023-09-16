@@ -42,4 +42,8 @@
     </AssemblyAttribute>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Application\Features\Commands\UpdateShoppingCart\Dtos\" />
+  </ItemGroup>
+
 </Project>

@@ -45,7 +45,7 @@ namespace ShoppingCart.Tests.Common
         {
         }
 
-        [CollectionDefinition("CheckoutCommandCollection")]
+        [CollectionDefinition("UpdateCommandCollection")]
         public class CheckoutCommandTestBase : ICollectionFixture<CommandTestBase>
         {
         }

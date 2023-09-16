@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Integrations.ShoppingCart;
+using Microsoft.AspNetCore.Mvc;
 using ShopingCarts.Application.Features.Commands.AddProductToShoppingCart;
 using ShopingCarts.Application.Features.Commands.RemoveProductFromShoppingCart;
+using ShopingCarts.Application.Features.Commands.UpdateShoppingCart;
 using ShopingCarts.Application.Features.Queries.GetShoppingCartById;
 using ShopingCarts.Controllers.Base;
 
@@ -23,7 +25,7 @@ namespace ShopingCarts.Controllers
         }
 
         [HttpPost("{shoppingCartId}")]
-        public async Task<ActionResult> GetShoppingCartById(int shoppingCartId, [FromBody] AddProductToShoppingCartCommandExternal contract)
+        public async Task<ActionResult> AddProductToShoppingCart(int shoppingCartId, [FromBody] AddProductToShoppingCartCommandExternal contract)
         {
             var result = await Mediator.Send(new AddProductToShoppingCartCommand()
             {
@@ -34,13 +36,24 @@ namespace ShopingCarts.Controllers
         }
 
         [HttpDelete("{shoppingCartId}/Products/{productId}")]
-        public async Task<ActionResult> GetShoppingCartById(int shoppingCartId, int productId)
+        public async Task<ActionResult> RemoveProductFromShoppingCart(int shoppingCartId, int productId)
         {
             var result = await Mediator.Send(new RemoveProductFromShoppingCartCommand()
             {
                 ShoppingCartId  = shoppingCartId,
                 ShoppingCartProductId = productId
 
+            });
+            return Ok(result);
+        }
+
+        [HttpPut("{shoppingCartInteId}")]
+        public async Task<ActionResult> RemoveProductFromShoppingCart(Guid shoppingCartId, [FromBody] List<ShoppingCartProductExternal> contract)
+        {
+            var result = await Mediator.Send(new UpdateShoppingCartCommand()
+            {
+                ShoppingCartIntegrationId = shoppingCartId,
+                Products = contract
             });
             return Ok(result);
         }

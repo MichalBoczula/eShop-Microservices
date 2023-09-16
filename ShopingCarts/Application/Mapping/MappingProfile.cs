@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Integrations.Orders.Request;
 using Integrations.Products.GetProductsByIntegrationId.Results;
+using Integrations.ShoppingCart;
 using ShopingCarts.Application.Features.Commands.AddProductToShoppingCart;
 using ShopingCarts.Domain.Entities;
 using System.Reflection;
@@ -15,7 +15,7 @@ namespace ShopingCarts.Application.Mapping
         {
             ApplyMappingFromAssembly(Assembly.GetExecutingAssembly());
             this.CreateShoppingCartProductForAddProductToShoppingCartCommand();
-            this.CreateShoppingCartExternalForCheckoutCommand();
+            this.CreateShopppingCartForUpdate();
         }
 
         private void ApplyMappingFromAssembly(Assembly assembly)
@@ -45,17 +45,11 @@ namespace ShopingCarts.Application.Mapping
                            .ForMember(d => d.ShoppingCartRef, opt => opt.Ignore());
         }
 
-        private void CreateShoppingCartExternalForCheckoutCommand()
+        private void CreateShopppingCartForUpdate()
         {
             CreateMap<ShoppingCartProductExternal, ShoppingCartProduct>()
-                .ForMember(d => d.Id, opt => opt.Ignore())
                 .ForMember(d => d.ShoppingCartId, opt => opt.Ignore())
                 .ForMember(d => d.ShoppingCartRef, opt => opt.Ignore());
-
-            CreateMap<ShoppingCart, ShoppingCartExternal>()
-                .ForMember(d => d.ShoppingCartIntegrationId, opt => opt.MapFrom(s => s.IntegrationId))
-                .ForMember(d => d.UserIntegrationId, opt => opt.MapFrom(s => s.UserRef.IntegrationId))
-                .ForMember(d => d.Products, opt => opt.Ignore());
         }
     }
 }
