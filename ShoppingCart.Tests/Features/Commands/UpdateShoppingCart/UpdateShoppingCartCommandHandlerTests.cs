@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
 using FluentAssertions;
+using Integrations.Products.GetProductsByIntegrationId.Results;
 using Integrations.ShoppingCart;
+using Moq;
 using ShopingCarts.Application.Features.Commands.UpdateShoppingCart;
+using ShopingCarts.ExternalServices.SynchComunication.HttpClients.Products.Abstract;
 using ShopingCarts.Persistance.Context;
 using ShoppingCart.Tests.Common;
 
@@ -12,6 +15,7 @@ namespace ShoppingCart.Tests.Features.Commands.UpdateShoppingCart
     {
         private readonly ShoppingCartContext _context;
         private readonly IMapper _mapper;
+        private readonly Mock<IProductsHttpRequestHandler> _productsHttpRequestHandler;
 
         public UpdateShoppingCartCommandHandlerTests(CommandTestBase testBase)
         {
@@ -23,7 +27,7 @@ namespace ShoppingCart.Tests.Features.Commands.UpdateShoppingCart
         public async Task ShouldRetrunErrorMessage()
         {
             //arrange
-            var handler = new UpdateShoppingCartCommandHandler(_context, _mapper);
+            var handler = new UpdateShoppingCartCommandHandler(_context, _mapper, _productsHttpRequestHandler.Object);
             var query = new UpdateShoppingCartCommand()
             {
                 ShoppingCartIntegrationId = new Guid("D0E9939D-0000-0000-0000-DB076F6C5278"),
@@ -35,6 +39,17 @@ namespace ShoppingCart.Tests.Features.Commands.UpdateShoppingCart
                         }
                     }
             };
+            _productsHttpRequestHandler.Setup(x => x.GetProductsByIntegrationIds(It.IsAny<List<Guid>>()))
+                .ReturnsAsync(new GetProductsByIntegrationIdQueryResult
+                {
+                    Products = new List<ProductExternal>()
+                    {
+                        new ProductExternal()
+                            {
+                                Id = 1
+                            }
+                    }
+                });
             //act
             var result = await handler.Handle(
                   query,

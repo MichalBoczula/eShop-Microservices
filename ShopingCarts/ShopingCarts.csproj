@@ -9,6 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Application\Features\Commands\UpdateShoppingCart\Dtos\**" />
+    <Content Remove="Application\Features\Commands\UpdateShoppingCart\Dtos\**" />
+    <EmbeddedResource Remove="Application\Features\Commands\UpdateShoppingCart\Dtos\**" />
+    <None Remove="Application\Features\Commands\UpdateShoppingCart\Dtos\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="MediatR" Version="12.1.1" />
@@ -40,10 +47,6 @@
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
       <_Parameter1>ShoppingCarts.IntegrationTests</_Parameter1>
     </AssemblyAttribute>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Application\Features\Commands\UpdateShoppingCart\Dtos\" />
   </ItemGroup>
 
 </Project>

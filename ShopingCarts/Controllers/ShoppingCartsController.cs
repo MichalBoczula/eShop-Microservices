@@ -1,6 +1,7 @@
 ﻿using Integrations.ShoppingCart;
 using Microsoft.AspNetCore.Mvc;
 using ShopingCarts.Application.Features.Commands.AddProductToShoppingCart;
+using ShopingCarts.Application.Features.Commands.CleanShoppingCart;
 using ShopingCarts.Application.Features.Commands.RemoveProductFromShoppingCart;
 using ShopingCarts.Application.Features.Commands.UpdateShoppingCart;
 using ShopingCarts.Application.Features.Queries.GetShoppingCartById;
@@ -40,14 +41,14 @@ namespace ShopingCarts.Controllers
         {
             var result = await Mediator.Send(new RemoveProductFromShoppingCartCommand()
             {
-                ShoppingCartId  = shoppingCartId,
+                ShoppingCartId = shoppingCartId,
                 ShoppingCartProductId = productId
 
             });
             return Ok(result);
         }
 
-        [HttpPut("{shoppingCartInteId}")]
+        [HttpPut("{shoppingCartIntegrationId}")]
         public async Task<ActionResult> RemoveProductFromShoppingCart(Guid shoppingCartId, [FromBody] List<ShoppingCartProductExternal> contract)
         {
             var result = await Mediator.Send(new UpdateShoppingCartCommand()
@@ -55,6 +56,16 @@ namespace ShopingCarts.Controllers
                 ShoppingCartIntegrationId = shoppingCartId,
                 Products = contract
             });
+            return Ok(result);
+        }
+
+        [HttpDelete("{shoppingCartIntegrationId}")]
+        public async Task<ActionResult> RemoveProductFromShoppingCart(Guid shoppingCartId)
+        {
+            var result = await Mediator.Send(new CleanShoppingCartCommand()
+                                                 {
+                                                     ShoppingCartIntegrationId = shoppingCartId,
+                                                 });
             return Ok(result);
         }
     }
