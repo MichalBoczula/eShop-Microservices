@@ -49,7 +49,8 @@ namespace ShopingCarts.Application.Mapping
         {
             CreateMap<ShoppingCartProductExternal, ShoppingCartProduct>()
                 .ForMember(d => d.ShoppingCartId, opt => opt.Ignore())
-                .ForMember(d => d.ShoppingCartRef, opt => opt.Ignore());
+                .ForMember(d => d.ShoppingCartRef, opt => opt.Ignore())
+                .ForMember(d => d.Price, opt => opt.Ignore());
         }
     }
 }

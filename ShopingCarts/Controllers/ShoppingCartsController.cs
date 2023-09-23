@@ -49,7 +49,7 @@ namespace ShopingCarts.Controllers
         }
 
         [HttpPut("{shoppingCartIntegrationId}")]
-        public async Task<ActionResult> RemoveProductFromShoppingCart(Guid shoppingCartId, [FromBody] List<ShoppingCartProductExternal> contract)
+        public async Task<ActionResult> UpdateShoppingCart(Guid shoppingCartId, [FromBody] List<ShoppingCartProductExternal> contract)
         {
             var result = await Mediator.Send(new UpdateShoppingCartCommand()
             {
@@ -60,7 +60,7 @@ namespace ShopingCarts.Controllers
         }
 
         [HttpDelete("{shoppingCartIntegrationId}")]
-        public async Task<ActionResult> RemoveProductFromShoppingCart(Guid shoppingCartId)
+        public async Task<ActionResult> CleanShoppingCart(Guid shoppingCartId)
         {
             var result = await Mediator.Send(new CleanShoppingCartCommand()
                                                  {

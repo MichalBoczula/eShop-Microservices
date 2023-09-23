@@ -24,6 +24,7 @@ namespace ShopingCarts.Application.Features.Commands.UpdateShoppingCart
             try
             {
                 var shoppingCart = await this._context.ShoppingCarts
+                    .Include(x => x.ShoppingCartProducts)
                     .Where(x => x.IntegrationId == request.ShoppingCartIntegrationId)
                     .FirstOrDefaultAsync();
 
@@ -36,34 +37,48 @@ namespace ShopingCarts.Application.Features.Commands.UpdateShoppingCart
                     };
                 }
 
-                var products = this._mapper.Map<List<ShoppingCartProduct>>(request.Products);
-                var productsToRemove = products.Where(x => x.Quantity == 0).ToList();
+                var ids = request.Products.Where(x => x.Quantity == 0).Select(x => x.Id).ToList();
+
+                var productsToRemove = shoppingCart.ShoppingCartProducts.Where(x => ids.Contains(x.Id)).ToList();
 
                 if (productsToRemove.Any())
                 {
                     this._context.ShoppingCartProducts.RemoveRange(productsToRemove);
                 }
 
-                var productsToAdd = products.Where(x => x.Quantity > 0).ToList();
+                //var productsToProccess = products.Where(x => x.Quantity > 0).ToList();
 
-                if (productsToAdd.Any())
-                {
-                    await Parallel.ForEachAsync(
-                        productsToAdd,
-                        cancellationToken,
-                        async (product, token) =>
-                            {
-                                var IsProductExists =
-                                    await this._productsHttpRequestHandler.GetProductsByIntegrationIds(
-                                        new List<Guid>() { product.ProductIntegrationId });
+                //if (productsToProccess.Any())
+                //{
+                //    await Parallel.ForEachAsync(
+                //        productsToProccess,
+                //        cancellationToken,
+                //        async (product, token) =>
+                //            {
+                //                var IsProductExists =
+                //                    await this._productsHttpRequestHandler.GetProductsByIntegrationIds(
+                //                        new List<Guid>() { productsToProccess.Select(x =>  x.});
 
-                                if (IsProductExists.Products != null && IsProductExists.Products.Any())
-                                {
-                                    await this._context.ShoppingCartProducts.AddAsync(product, token);
-                                }
-                            });
-                }
+                //                if (IsProductExists.Products != null && IsProductExists.Products.Any())
+                //                {
+                //                    await this._context.ShoppingCartProducts.AddAsync(product, token);
+                //                }
+                //            });
+                //
+                //}
 
+                await this._context.SaveChangesAsync(cancellationToken);
+
+
+                shoppingCart = await this._context.ShoppingCarts
+                    .Include(x => x.ShoppingCartProducts)
+                    .Where(x => x.IntegrationId == request.ShoppingCartIntegrationId)
+                    .FirstOrDefaultAsync();
+
+                shoppingCart.Total = shoppingCart.ShoppingCartProducts.Aggregate(0, (total, prod) => total = prod.Price * prod.Quantity); 
+                
+                this._context.ShoppingCarts.Update(shoppingCart);
+                
                 await this._context.SaveChangesAsync(cancellationToken);
 
                 return new UpdateShoppingCartCommandResult
